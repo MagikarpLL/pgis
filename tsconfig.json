@@ -1,0 +1,31 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "esnext",
+    "noImplicitAny": true,
+    "sourceMap": true,
+    "preserveConstEnums": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "removeComments": true,
+    "rootDir": "./src",
+    "outDir": "./dist"
+  },
+  "atom": {
+    "rewriteTsconfig": true
+  },
+  "include": [
+    "./src/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist"
+  ],
+  "files": [
+    "./src/index.ts"
+  ],
+  "filesGlob": [
+    "./src/**/*.ts"
+  ]
+}

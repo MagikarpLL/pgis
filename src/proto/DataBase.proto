@@ -1,0 +1,35 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "com.maihe.proto.DataBase";
+option java_outer_classname = "DataBase";
+option objc_class_prefix = "MH";
+
+package DataBase;
+
+service DBInfo {
+  // get database's properties
+  rpc getPros (DBRequest) returns (DBResponse) {
+  }
+  //query
+  rpc query (SQLRequest) returns (SQLResponse){
+  }
+  //update or save or drop
+  rpc edit (SQLRequest) returns (SQLResponse){
+  }
+}
+
+message DBRequest{
+}
+
+message DBResponse{
+  string result =1;
+}
+
+message SQLRequest{
+  string sql=1;
+}
+
+message SQLResponse{
+  string result=1;
+}

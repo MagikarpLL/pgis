@@ -1,0 +1,32 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "com.maihe.proto.User";
+option java_outer_classname = "TokenProto";
+option objc_class_prefix = "TKP";
+
+package User;
+
+service User {
+    // save user's info
+    rpc saveUserInfo (UserRequest) returns (ResultResponse) {
+    }
+    //get user's info
+    rpc getUserInfo (UserNameRequest) returns (UserResponse) {
+    }
+}
+
+message UserNameRequest {
+    string username = 1;
+}
+message UserResponse {
+    string username = 1;
+    string password = 2;
+}
+message UserRequest {
+    string username = 1;
+    string password = 2;
+}
+message ResultResponse {
+    bool success = 1;
+}
