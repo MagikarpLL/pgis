@@ -1,7 +1,7 @@
 {
-  "name": "yooee-koa",
+  "name": "pgis-koa",
   "version": "0.0.1",
-  "description": "智慧社区--Koa后端",
+  "description": "pgis--Koa后端",
   "main": "index.js",
   "scripts": {
     "build": "gulp build",
@@ -16,7 +16,7 @@
     "koa2",
     "typescript"
   ],
-  "author": "jbzbryan",
+  "author": "htyLz",
   "license": "ISC",
   "dependencies": {
     "acl": "^0.4.10",
@@ -33,10 +33,8 @@
     "koa-static": "^3.0.0",
     "mkdirp": "^0.5.1",
     "moment": "^2.18.1",
-    "mongoose": "^4.10.0",
     "nconf": "^0.8.4",
     "reflect-metadata": "^0.1.10",
-    "socket.io": "^2.0.1",
     "sql": "^0.75.0",
     "uuid": "^3.0.1"
   },
@@ -51,7 +49,6 @@
     "@types/koa-jwt": "^3.2.0",
     "@types/koa-router": "^7.0.22",
     "@types/mkdirp": "^0.3.29",
-    "@types/mongoose": "^4.7.13",
     "@types/nconf": "0.0.34",
     "@types/socket.io": "^1.4.29",
     "@types/uuid": "^2.0.29",
