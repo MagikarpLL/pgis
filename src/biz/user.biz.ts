@@ -1,4 +1,3 @@
-import JWT from '../utils/jwt.util';
 import { Grpc } from "../utils/grpc.util";
 import redis from '../utils/redis.util';
 import Date from '../utils/date.util';

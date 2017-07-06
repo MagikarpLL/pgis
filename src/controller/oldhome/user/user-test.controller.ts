@@ -16,10 +16,7 @@ export default class UserTestController {
     async login(ctx: Koa.Context, next: Function): Promise<void> {
         let controller = new Controller(ctx);
         try {
-
-            console.log("hahahahahahahahah");
             console.log(ctx.header);
- 
             controller.success('sucess', {
                 token: 'token'
             });

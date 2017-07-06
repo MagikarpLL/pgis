@@ -3,8 +3,6 @@ import * as Koa from 'koa';
 import { DB } from './db.util';
 // SQL工具类
 import { SQL } from './sql.util';
-// Socket.IO
-import * as SocketIO from 'socket.io';
 
 interface Response {
     status: number;
