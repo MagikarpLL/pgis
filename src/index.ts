@@ -19,7 +19,6 @@ import { Context, init } from './utils/koa.util';
 
 import * as Http from 'http';
 
-import * as SocketIO from 'socket.io';
 
 const Serve = require('koa-static');
 
@@ -27,7 +26,7 @@ const Serve = require('koa-static');
 const app = new Koa();
 const router = new Route(app);
 const server = Http.createServer(app.callback());
-const io = SocketIO(server);
+
 console.log(config.root);
 
 const db = new DB();
@@ -39,7 +38,6 @@ app.use(cors());
 app.use(Serve(config.ftproot));
 
 app.use(async (ctx: Context, next: Function) => {
-    ctx.io = io;
     ctx.db = db;
     ctx.sql = sql;
     init(ctx);
@@ -48,9 +46,6 @@ app.use(async (ctx: Context, next: Function) => {
 
 router.routes(__dirname, 'controller', config.jwt.secret);
 
-io.on('connection', function () {
-    console.info(`Socket已连接`);
-});
 server.listen(config.port, config.host, () => {
     console.info(`服务端已经启动 http://${config.host}:${config.port}`);
 });
