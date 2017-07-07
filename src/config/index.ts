@@ -22,5 +22,6 @@ export default {
         log_name: "log",
         log_path: "logs/"
     },
-    ftproot:'../public'
+    ftproot:'../public',
+    secret:'test'
 };
