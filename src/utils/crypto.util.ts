@@ -1,7 +1,7 @@
 import config from '../config';
 let crypto = require('crypto')
-const cipher = crypto.createCipher('aes-256-cbc',config.secret);  
-const decipher=crypto.createDecipher('aes-256-cbc',config.secret);
+const cipher = crypto.createCipher('aes-128-cbc',config.secret);  
+const decipher=crypto.createDecipher('aes-128-cbc',config.secret);
 /** 
  * 加密函数 
  * @param text  需要加密的内容 

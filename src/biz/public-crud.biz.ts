@@ -94,23 +94,16 @@ function updateMySql(body: any, tableName: string, primaryKey: string, primaryKe
     console.log('length' + length);
     let counter = 0;
     for (let i = 1; i <= length; i++) {
-
         console.log('i = ' + i);
-
         let columnName = `columnName${i}`;
         let columnValue = `columnValue${i}`;
         let temp =  humpToLine(params[columnName]);
-
         if (temp === 'empid_create_') {
             throw 'you are not allow to change empidCreate';
         }
-
         sql = sql + `, ${temp} = '${params[columnValue]}' `;
-
     }
-
     sql = sql + ` WHERE ${primaryKey} = '${primaryKeyValue}'`;
-
     return sql;
 }
 
@@ -121,9 +114,7 @@ function retrieveMySql(query: any, tableName: string): string {
     let length = getJSONLength(params) / 2;
     console.log('length' + length);
     for (let i = 1; i <= length; i++) {
-
         console.log('i = ' + i);
-
         let columnName = `columnName${i}`;
         let columnValue = `columnValue${i}`;
         let temp =  humpToLine(params[columnName]);
@@ -133,7 +124,6 @@ function retrieveMySql(query: any, tableName: string): string {
             sql = sql + `AND ${temp} = '${params[columnValue]}' `;
         }
     }
-
     return sql;
 }
 
