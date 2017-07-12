@@ -19,7 +19,6 @@
   "author": "htyLz",
   "license": "ISC",
   "dependencies": {
-    "acl": "^0.4.10",
     "bunyan": "^1.8.10",
     "crypto": "0.0.3",
     "google-protobuf": "^3.3.0",
@@ -52,6 +51,7 @@
     "@types/nconf": "0.0.34",
     "@types/socket.io": "^1.4.29",
     "@types/uuid": "^2.0.29",
+    "@types/redis":"2.6.0",
     "gulp": "^3.9.1",
     "gulp-changed": "^3.1.0",
     "gulp-nodemon": "^2.2.1",
