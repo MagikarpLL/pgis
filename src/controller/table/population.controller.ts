@@ -1,10 +1,10 @@
 import * as Router from 'koa-router';
 import { Context } from '../../utils/koa.util';
-import { insert, remove } from '../../biz/table/workingSchedule.biz.';
-import { retrieve, update, findOneInDatabase } from '../../biz/public-crud.biz';
+import { insert, remove, findOneInDatabase, getWholeTable, update } from '../../biz/table/population.biz';
 import { route, required, log, HttpMethod, DataType } from '../../addon/route';
 
-export default class WorkingScheduleController {
+//tb_population
+export default class PopulationController {
 
     //增
     @route({
@@ -13,20 +13,19 @@ export default class WorkingScheduleController {
         unless: true,
     })
     @required({
-        'body': ['empidCreate'],
+        'body': ['idNumber', 'residenceId', 'name','gender','ethnicity','birthday','relationToHouseHolder','updateUsrId'],
     })
     @log
     async insert(ctx: Context, next: Function): Promise<void> {
         try {
-            let result = await insert(ctx.request.body, ctx.db);
+
+            let result = await insert(ctx.request.body, ctx.db, ctx.sql);
             ctx.success(result, 'success');
         } catch (e) {
             console.error(e);
             ctx.error('error', e);
         }
     }
-
-
 
     //查
     @route({
@@ -37,7 +36,7 @@ export default class WorkingScheduleController {
     @log
     async retrieve(ctx: Context, next: Function): Promise<any> {
         try {
-            var result = await retrieve(ctx.request.query, ctx.db, 'working_schedule_info');
+            var result = await getWholeTable('tb_population', ctx.db);
             ctx.success(result, 'success');
         } catch (e) {
             console.error(e);
@@ -54,7 +53,7 @@ export default class WorkingScheduleController {
     @log
     async retrieveOne(ctx: Context, next: Function): Promise<any> {
         try {
-            var result = await findOneInDatabase('working_schedule_info', 'id_', ctx.params.id, ctx.db);
+            var result = await findOneInDatabase('tb_population', 'idNumber', ctx.params.id, ctx.db);
             ctx.success(result, 'success');
         } catch (e) {
             console.error(e);
@@ -72,7 +71,7 @@ export default class WorkingScheduleController {
     async remove(ctx: Context, next: Function): Promise<void> {
         try {
 
-            let result = await remove(ctx.db, ctx.params.id);
+            let result = await remove(ctx.db, ctx.params.id, ctx.sql);
             ctx.success(result, 'success');
         } catch (e) {
             console.error(e);
@@ -80,22 +79,26 @@ export default class WorkingScheduleController {
         }
     }
 
+
+
     //改
     @route({
-        path: '/:id/:empidUpdate',
+        path: '/:id',
         method: HttpMethod.PATCH,
         unless: true,
+    })
+    @required({
+        'body': ['updateUsrId'],
     })
     @log
     async update(ctx: Context, next: Function): Promise<any> {
         try {
-            var result = await update(ctx.request.body, ctx.db, 'working_schedule_info', 'id_', ctx.params.id, ctx.params.empidUpdate);
+            var result = await update(ctx.request.body, ctx.sql, 'tb_population', 'idNumber', ctx.params.id, ctx.db);
             ctx.success(result, 'success');
         } catch (e) {
             console.error(e);
             ctx.error('error', e);
         }
     }
-
 
 }

@@ -1,11 +1,10 @@
 import * as Router from 'koa-router';
 import { Context } from '../../utils/koa.util';
-import { insert, remove } from '../../biz/table/suggestionInfo.biz';
-import { retrieve, update, findOneInDatabase } from '../../biz/public-crud.biz';
+import { insert, remove, findOneInDatabase, getWholeTable, update } from '../../biz/table/residence.biz';
 import { route, required, log, HttpMethod, DataType } from '../../addon/route';
 
-//suggestion_info
-export default class SuggestionInfoController {
+//tb_residence
+export default class ResidenceController {
 
     //增
     @route({
@@ -14,13 +13,13 @@ export default class SuggestionInfoController {
         unless: true,
     })
     @required({
-        'body': ['empidCreate'],
+        'body': ['roomId', 'houseHoldId', 'registrant'],
     })
     @log
     async insert(ctx: Context, next: Function): Promise<void> {
         try {
 
-            let result = await insert(ctx.request.body, ctx.db);
+            let result = await insert(ctx.request.body, ctx.db, ctx.sql);
             ctx.success(result, 'success');
         } catch (e) {
             console.error(e);
@@ -37,7 +36,7 @@ export default class SuggestionInfoController {
     @log
     async retrieve(ctx: Context, next: Function): Promise<any> {
         try {
-            var result = await retrieve(ctx.request.query, ctx.db, 'suggestion_info');
+            var result = await getWholeTable('tb_residence', ctx.db);
             ctx.success(result, 'success');
         } catch (e) {
             console.error(e);
@@ -54,7 +53,7 @@ export default class SuggestionInfoController {
     @log
     async retrieveOne(ctx: Context, next: Function): Promise<any> {
         try {
-            var result = await findOneInDatabase('suggestion_info', 'id_', ctx.params.id, ctx.db);
+            var result = await findOneInDatabase('tb_residence', 'houseHoldId', ctx.params.id, ctx.db);
             ctx.success(result, 'success');
         } catch (e) {
             console.error(e);
@@ -72,7 +71,7 @@ export default class SuggestionInfoController {
     async remove(ctx: Context, next: Function): Promise<void> {
         try {
 
-            let result = await remove(ctx.db, ctx.params.id);
+            let result = await remove(ctx.db, ctx.params.id, ctx.sql);
             ctx.success(result, 'success');
         } catch (e) {
             console.error(e);
@@ -84,14 +83,17 @@ export default class SuggestionInfoController {
 
     //改
     @route({
-        path: '/:id/:empidUpdate',
+        path: '/:id',
         method: HttpMethod.PATCH,
         unless: true,
+    })
+    @required({
+        'body': ['updateUsrId'],
     })
     @log
     async update(ctx: Context, next: Function): Promise<any> {
         try {
-            var result = await update(ctx.request.body, ctx.db, 'suggestion_info', 'id_', ctx.params.id, ctx.params.empidUpdate);
+            var result = await update(ctx.request.body, ctx.sql, 'tb_residence', 'houseHoldId', ctx.params.id, ctx.db);
             ctx.success(result, 'success');
         } catch (e) {
             console.error(e);

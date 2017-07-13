@@ -49,7 +49,7 @@ export async function overSeaRelative(body: any, db: any, sql: SQL): Promise<any
     let sqlExec = "";
     let residenceData = body.residence;
     for (let i in residenceData) {
-        sqlExec = sqlExec + sql.insert("TB_OVERSEARELATIVE", residenceData[i]) + ";";
+        sqlExec = sqlExec + sql.insert("TB_OVERSEASRELATIVE", residenceData[i]) + ";";
     }
     return await grpcServer.call('inputData', {inputDataSql : sqlExec});
 }
