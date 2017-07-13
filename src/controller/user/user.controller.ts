@@ -1,6 +1,6 @@
 import * as Router from 'koa-router';
 import { Context } from '../../utils/koa.util';
-import { login, register, verify, addUserRoles, removeUserRoles } from '../../biz/user.biz';
+import { login, register, verify, addUserRoles, removeUserRoles, getWholeTable, findOneInDatabase } from '../../biz/user.biz';
 import { route, required, log, HttpMethod, DataType } from '../../addon/route';
 
 /**
@@ -17,14 +17,13 @@ export default class UserController {
         unless: true,
     })
     @required({
-        'body': ['username', 'password',],
+        'body': ['username', 'mpassword',],
     })
     @log
     async login(ctx: Context, next: Function): Promise<void> {
         try {
-            let { username, password } = ctx.request.body;
-            const obj = await login(ctx.db, username, password);
-            ctx.success({ role: obj }, 'success');
+            const obj = await login(ctx.db, ctx.request.body);
+            ctx.success({ userId: obj }, 'success');
         } catch (e) {
             console.error(e);
             ctx.error('error', e);
@@ -38,7 +37,7 @@ export default class UserController {
         unless: true,
     })
     @required({
-        'body': ['userName', 'userPass'],
+        'body': ['userName', 'userPassword','updateUserId'],
     })
     @log
     async register(ctx: Context, next: Function): Promise<void> {

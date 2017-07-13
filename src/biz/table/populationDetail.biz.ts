@@ -124,8 +124,7 @@ export async function remove(db: any, primaryKey: string, sql: SQL): Promise<any
 }
 
 //获取整表
-export async function getWholeTable(query: any, db: any): Promise<any> {
-    let tableName = humpToLineTable(query.tableName);
+export async function getWholeTable(tableName: string, db: any): Promise<any> {
     let sql: string;
     switch (db.dbType) {
         case DBType.MYSQL:
@@ -139,7 +138,6 @@ export async function getWholeTable(query: any, db: any): Promise<any> {
     }
     const result = await db.query(sql);
     const jsObj = JSON.parse(result.result);
-    // console.log('jsobj is ', jsObj)
     return jsObj;
 }
 
