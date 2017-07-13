@@ -1,11 +1,10 @@
 import * as Router from 'koa-router';
 import { Context } from '../../utils/koa.util';
-import { insert, remove } from '../../biz/table/workLog.biz';
-import { retrieve, update, findOneInDatabase } from '../../biz/public-crud.biz';
+import { insert, remove, findOneInDatabase, getWholeTable, update } from '../../biz/table/populationDetail.biz';
 import { route, required, log, HttpMethod, DataType } from '../../addon/route';
 
-//goods_info
-export default class WorkLogController {
+//tb_populationdetailed
+export default class PopulationDetailedController {
 
     //增
     @route({
@@ -14,13 +13,13 @@ export default class WorkLogController {
         unless: true,
     })
     @required({
-        'body': ['empidCreate'],
+        'body': ['idNumber', 'residenceId', 'name', 'updateUserId'],
     })
     @log
     async insert(ctx: Context, next: Function): Promise<void> {
         try {
 
-            let result = await insert(ctx.request.body, ctx.db);
+            let result = await insert(ctx.request.body, ctx.db, ctx.sql);
             ctx.success(result, 'success');
         } catch (e) {
             console.error(e);
@@ -37,7 +36,7 @@ export default class WorkLogController {
     @log
     async retrieve(ctx: Context, next: Function): Promise<any> {
         try {
-            var result = await retrieve(ctx.request.query, ctx.db, 'work_log');
+            var result = await getWholeTable('tb_populationdetailed', ctx.db);
             ctx.success(result, 'success');
         } catch (e) {
             console.error(e);
@@ -54,7 +53,7 @@ export default class WorkLogController {
     @log
     async retrieveOne(ctx: Context, next: Function): Promise<any> {
         try {
-            var result = await findOneInDatabase('work_log', 'id_', ctx.params.id, ctx.db);
+            var result = await findOneInDatabase('tb_populationdetailed', 'idNumber', ctx.params.id, ctx.db);
             ctx.success(result, 'success');
         } catch (e) {
             console.error(e);
@@ -72,7 +71,7 @@ export default class WorkLogController {
     async remove(ctx: Context, next: Function): Promise<void> {
         try {
 
-            let result = await remove(ctx.db, ctx.params.id);
+            let result = await remove(ctx.db, ctx.params.id, ctx.sql);
             ctx.success(result, 'success');
         } catch (e) {
             console.error(e);
@@ -84,14 +83,17 @@ export default class WorkLogController {
 
     //改
     @route({
-        path: '/:id/:empidUpdate',
+        path: '/:id',
         method: HttpMethod.PATCH,
         unless: true,
+    })
+    @required({
+        'body': ['updateUserId'],
     })
     @log
     async update(ctx: Context, next: Function): Promise<any> {
         try {
-            var result = await update(ctx.request.body, ctx.db, 'work_log', 'id_', ctx.params.id, ctx.params.empidUpdate);
+            var result = await update(ctx.request.body, ctx.sql, 'tb_populationdetailed', 'idNumber', ctx.params.id, ctx.db);
             ctx.success(result, 'success');
         } catch (e) {
             console.error(e);
