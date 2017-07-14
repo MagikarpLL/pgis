@@ -14,7 +14,7 @@ export async function modifyUserRole(id: string, oldRoles: any, newRoles: any) {
 export async function login(db: any, body: any): Promise<string> {
     body = decode(body);
     let { username, mpassword } = body;
-    const obj: any = await db.query(`SELECT * from tb_user where username='${username}'`);
+    const obj: any = await db.query(`SELECT * from tb_usr where username='${username}'`);
     let jsobj = JSON.parse(obj.result);
     let password = String(jsobj[0].userPassword);
     if (password == mpassword) return jsobj[0].userId;
@@ -27,7 +27,7 @@ export async function register(body: any, db: any): Promise<string> {
     let { userName, userPassword, updateUserId } = body;
     let uuid = UUID.genUUID();
     let createDate = Date.getDate();
-    const result = await db.edit(`INSERT INTO tb_user values ('${uuid}','${userName}','${userPassword}','${createDate}'，'${updateUserId}')`);
+    const result = await db.edit(`INSERT INTO tb_usr values ('${uuid}','${userName}','${userPassword}',to_date('${createDate}','yyyy-mm-dd')，'${updateUserId}')`);
     auth.addUserRoles(uuid, 'guest');
     return result;
 }

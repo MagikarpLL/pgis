@@ -115,8 +115,14 @@ export class SQL {
         const values: string[] = [];
         for (const field of Object.keys(fields)) {
             if (fields[field] === undefined) { continue };
-            fds.push(field);
-            values.push(`'${fields[field]}'`)
+            if (fields[field].indexOf('to_date')==0) {
+                fds.push(field);
+                values.push(`${fields[field]}`)
+            }
+            else {
+                fds.push(field);
+                values.push(`'${fields[field]}'`)
+            }
         }
         return `INSERT INTO ${name}(${fds.join(',')}) VALUES (${values.join(',')})`;
     }

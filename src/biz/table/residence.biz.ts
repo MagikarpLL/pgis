@@ -19,7 +19,7 @@ export async function insert(body: any, db: any, sql: SQL): Promise<any> {
         registerUnit: registerUnit,
         localatTribute: localatTribute,
         registrant: registrant,
-        registerDate: registerDate,
+        registerDate:  `to_date('${registerDate}','yyyy-mm-dd')`,
         houseHolderName: houseHolderName,
         houseHolderId: houseHolderId,
         housingArea: housingArea,
@@ -28,7 +28,7 @@ export async function insert(body: any, db: any, sql: SQL): Promise<any> {
         phone: phone,
         postcode: postcode,
         updateUsrId: updateUsrId,
-        updateTime: createTime
+        updateTime:  `to_date('${createTime}','yyyy-mm-dd')`
     }
     sqlstr = sql.insert('tb_residence', data);
     const result = db.edit(sqlstr);

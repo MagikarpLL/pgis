@@ -23,7 +23,7 @@ export async function insert(body: any, db: any, sql: SQL): Promise<any> {
         room: room,
         buildingId: buildingId,
         updateUsrId: updateUsrId,
-        updateTime: createTime,
+        updateTime:  `to_date('${createTime}','yyyy-mm-dd')`
     }
     sqlstr = sql.insert('tb_propertyGis', data);
     const result = db.edit(sqlstr);
