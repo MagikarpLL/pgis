@@ -10,7 +10,7 @@ export async function insert(body: any, db: any, sql: SQL): Promise<any> {
     let sqlstr: string;
     let createTime = Date.getDateTime();
     let { roomId, district, street, neighborhood, building, unit, floor, room,
-         buildingId, updateUsrId, updateTime
+        buildingId, updateUsrId
  } = body;
     const data = {
         roomId: roomId,
@@ -83,13 +83,7 @@ export async function update(body: any, sql: SQL, tableName: string, primaryKey:
 }
 
 
-//多参数查询
-export async function multiSelect(tableName: string, body: any, sql: SQL, db: any) {
-    let sqlstr = sql.multiSelect(tableName, body);
-    const result = await db.query(sqlstr);
-    const jsObj = JSON.parse(result.result);
-    return jsObj;
-}
+
 
 
 

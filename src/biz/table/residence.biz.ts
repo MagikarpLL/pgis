@@ -8,10 +8,10 @@ import OBJECT from '../../utils/object.util'
 //insert
 export async function insert(body: any, db: any, sql: SQL): Promise<any> {
     let sqlstr: string;
-    let createTime = Date.getDateTime();
+    let createTime = Date.getDate();
     let { houseHoldId, roomId, registerUnit, localatTribute, registrant, registerDate,
-         houseHolderName, houseHolderId, housingArea,housingCategory,familyPlanningCategory,
-         phone, postcode, updateUsrId, updateTime
+        houseHolderName, houseHolderId, housingArea, housingCategory, familyPlanningCategory,
+        phone, postcode, updateUsrId,
  } = body;
     const data = {
         houseHoldId: houseHoldId,
@@ -25,10 +25,10 @@ export async function insert(body: any, db: any, sql: SQL): Promise<any> {
         housingArea: housingArea,
         housingCategory: housingCategory,
         familyPlanningCategory: familyPlanningCategory,
-        phone:phone,
-        postcode:postcode,
-        updateUsrId:updateUsrId,
-        updateTime:updateTime
+        phone: phone,
+        postcode: postcode,
+        updateUsrId: updateUsrId,
+        updateTime: createTime
     }
     sqlstr = sql.insert('tb_residence', data);
     const result = db.edit(sqlstr);

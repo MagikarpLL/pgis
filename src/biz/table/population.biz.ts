@@ -8,7 +8,7 @@ import OBJECT from '../../utils/object.util'
 //insert
 export async function insert(body: any, db: any, sql: SQL): Promise<any> {
     let sqlstr: string;
-    let createTime = Date.getDateTime();
+    let createTime = Date.getDate();
     let { idNumber, residenceId, name, gender, ethnicity, birthday, educationalDegree,
         politicalStatus, maritalStatus, marriageCrisisDate, firstMarriageDate,
         relationToHouseHolder, typeOfHouseHold, ancestralNativePlace, residentialNature,
@@ -16,7 +16,7 @@ export async function insert(body: any, db: any, sql: SQL): Promise<any> {
         verificationDate, issueCertificateDate, certificateExpireDate, liudongCertificateId,
         dateOfDeath, speciality, anamnesis, pastMedicalHistory, workPlace, companyProperty,
         socialSecurity, pensionCategory, personNelCategory, peopleliveHoodCategory,
-        updateUsrId, updateTime
+        updateUsrId
  } = body;
     const data = {
         idNumber: idNumber,
@@ -55,7 +55,7 @@ export async function insert(body: any, db: any, sql: SQL): Promise<any> {
         personNelCategory:personNelCategory,
         peopleliveHoodCategory:peopleliveHoodCategory,
         updateUsrId: updateUsrId,
-        updateTime: updateTime
+        updateTime: createTime
     }
     sqlstr = sql.insert('tb_population', data);
     const result = db.edit(sqlstr);

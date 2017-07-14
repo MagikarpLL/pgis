@@ -13,7 +13,8 @@ export default class ResidenceController {
         unless: true,
     })
     @required({
-        'body': ['roomId', 'houseHoldId', 'registrant'],
+        'body': ['roomId', 'houseHoldId', 'registrant','phone','updateUserId',
+        'householderName','householderId','housingArea','housingCategory','familyPlanningCategory'],
     })
     @log
     async insert(ctx: Context, next: Function): Promise<void> {

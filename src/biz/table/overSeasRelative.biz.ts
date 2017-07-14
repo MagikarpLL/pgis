@@ -8,9 +8,9 @@ import OBJECT from '../../utils/object.util'
 //insert
 export async function insert(body: any, db: any, sql: SQL): Promise<any> {
     let sqlstr: string;
-    let createTime = Date.getDateTime();
+    let createTime = Date.getDate();
     let { residenceId, name, gender, ethnicity, birthday, educationalDegree, politicalStatus, maritalStatus, contactInfo,
-        relationToHouseHolder, residentialAddress, updateUsrId, updateTime
+        relationToHouseHolder, residentialAddress, updateUsrId
  } = body;
     const data = {
         residenceId: residenceId,
