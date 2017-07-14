@@ -4,12 +4,13 @@ import { Context } from '../utils/koa.util';
 import auth from '../utils/auth.util';
 import { encode, decode } from '../utils/crypto.util';
 import { DBType } from "../utils/db.util";
-
+import { SQL } from "../utils/sql.util"
+//修改用户类型
 export async function modifyUserRole(id: string, oldRoles: any, newRoles: any) {
     auth.removeUserRoles(id, oldRoles);
     auth.addUserRoles(id, newRoles);
 }
-
+//登录
 export async function login(db: any, body: any): Promise<string> {
     body = decode(body);
     let { username, mpassword } = body;
@@ -20,27 +21,26 @@ export async function login(db: any, body: any): Promise<string> {
     else return "wrong password";
 
 }
-
+//注册
 export async function register(body: any, db: any): Promise<string> {
     body = decode(body);
     let { userName, userPassword, updateUserId } = body;
     let uuid = UUID.genUUID();
-    let createId = uuid;
     let createDate = Date.getDate();
     const result = await db.edit(`INSERT INTO tb_user values ('${uuid}','${userName}','${userPassword}','${createDate}'，'${updateUserId}')`);
     auth.addUserRoles(uuid, 'guest');
     return result;
 }
-
+//验证
 export async function verify(id: string, resoucres: any, perimissions: any) {
     return auth.isAllowed(id, resoucres, perimissions);
 }
 
-
+//添加用户角色
 export async function addUserRoles(id: string, roles: any) {
     auth.addUserRoles(id, roles);
 }
-
+//删除用户角色
 export async function removeUserRoles(id: string, roles: any) {
     auth.removeUserRoles(id, roles);
 }
@@ -65,18 +65,10 @@ export async function getWholeTable(tableName: string, db: any): Promise<any> {
 
 //获取单条数据
 export async function findOneInDatabase(tableName: string, primaryKeyName: string, primaryKeyValue: string, db: any) {
-    let sql: string;
-    switch (db.dbType) {
-        case DBType.MYSQL:
-            sql = `SELECT * FROM ${tableName} WHERE ${primaryKeyName} = '${primaryKeyValue}'`;
-            break;
-        case DBType.ORACLE:
-            sql = `SELECT * FROM ${tableName}WHERE ${primaryKeyName} = '${primaryKeyValue}'`;
-            break;
-        default:
-            throw new Error('DB not found!');
-    }
+
+    let sql = `SELECT * FROM ${tableName} WHERE ${primaryKeyName} = '${primaryKeyValue}'`;
     const result = await db.query(sql);
     const jsObj = JSON.parse(result.result);
     return jsObj[0];
 }
+

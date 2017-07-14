@@ -140,4 +140,14 @@ export class SQL {
         return `SELECT * FROM ${name} WHERE ${id}='${value}'`;
     }
 
+    multiSelect(name: string, fields: Fields) {
+        let sqlstring = `SELECT * from ${name} ta WHERE`;
+        for (const field of Object.keys(fields)) {
+            if (fields[field] === undefined) { continue }
+            sqlstring += ` ta.${field}='${fields[field]}' and `;
+        }
+        sqlstring = sqlstring.substring(0, sqlstring.length - 5);
+        return sqlstring;
+    }
+
 }

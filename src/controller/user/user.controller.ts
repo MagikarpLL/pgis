@@ -1,6 +1,6 @@
 import * as Router from 'koa-router';
 import { Context } from '../../utils/koa.util';
-import { login, register, verify, addUserRoles, removeUserRoles, getWholeTable, findOneInDatabase } from '../../biz/user.biz';
+import { login, register, verify, addUserRoles, removeUserRoles, getWholeTable, findOneInDatabase, modifyUserRole } from '../../biz/user.biz';
 import { route, required, log, HttpMethod, DataType } from '../../addon/route';
 
 /**
@@ -37,7 +37,7 @@ export default class UserController {
         unless: true,
     })
     @required({
-        'body': ['userName', 'userPassword','updateUserId'],
+        'body': ['userName', 'userPassword', 'updateUserId'],
     })
     @log
     async register(ctx: Context, next: Function): Promise<void> {
@@ -72,9 +72,9 @@ export default class UserController {
     }
 
 
-    //修改用户角色类型,roles可为数组
+    //添加用户角色类型,roles可为数组
     @route({
-        path: '/get/:id',
+        path: '/add/:id',
         method: HttpMethod.POST,
         unless: true,
     })
@@ -107,6 +107,27 @@ export default class UserController {
         try {
             let { roles } = ctx.request.body;
             let result = await removeUserRoles(ctx.params.id, roles);
+            ctx.success(result, 'success');
+        } catch (e) {
+            console.error(e);
+            ctx.error('error', e);
+        }
+    }
+
+    //修改用户角色类型,roles可为数组
+    @route({
+        path: '/modify/:id',
+        method: HttpMethod.POST,
+        unless: true,
+    })
+    @required({
+        body: ['oldRoles', 'newRoles']
+    })
+    @log
+    async modifyUserRole(ctx: Context, next: Function): Promise<any> {
+        try {
+            let { oldRoles, newRoles } = ctx.request.body;
+            let result = await modifyUserRole(ctx.params.id, oldRoles, newRoles);
             ctx.success(result, 'success');
         } catch (e) {
             console.error(e);
