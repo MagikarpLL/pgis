@@ -87,7 +87,13 @@ export async function update(body: any, sql: SQL, tableName: string, primaryKey:
     const result = await db.edit(sqlstr);
 }
 
-
+//多参数查询
+export async function multiSelect(tableName: string, body: any, sql: SQL, db: any) {
+    let sqlstr = sql.multiSelect(tableName, body);
+    const result = await db.query(sqlstr);
+    const jsObj = JSON.parse(result.result);
+    return jsObj;
+}
 
 
 

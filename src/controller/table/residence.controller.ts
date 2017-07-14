@@ -1,6 +1,6 @@
 import * as Router from 'koa-router';
 import { Context } from '../../utils/koa.util';
-import { insert, remove, findOneInDatabase, getWholeTable, update } from '../../biz/table/residence.biz';
+import { insert, remove, findOneInDatabase, getWholeTable, update, multiSelect } from '../../biz/table/residence.biz';
 import { route, required, log, HttpMethod, DataType } from '../../addon/route';
 
 //tb_residence
@@ -54,6 +54,23 @@ export default class ResidenceController {
     async retrieveOne(ctx: Context, next: Function): Promise<any> {
         try {
             var result = await findOneInDatabase('tb_residence', 'houseHoldId', ctx.params.id, ctx.db);
+            ctx.success(result, 'success');
+        } catch (e) {
+            console.error(e);
+            ctx.error('error', e);
+        }
+    }
+
+    //多参数查询
+    @route({
+        path: '/multi',
+        method: HttpMethod.GET,
+        unless: true,
+    })
+    @log
+    async multiSelect(ctx: Context, next: Function): Promise<any> {
+        try {
+            var result = await multiSelect('tb_populationdetailed', ctx.request.body, ctx.sql, ctx.db);
             ctx.success(result, 'success');
         } catch (e) {
             console.error(e);

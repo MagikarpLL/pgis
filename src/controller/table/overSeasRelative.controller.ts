@@ -1,6 +1,6 @@
 import * as Router from 'koa-router';
 import { Context } from '../../utils/koa.util';
-import { insert, remove, findOneInDatabase, getWholeTable, update } from '../../biz/table/overSeasRelative.biz';
+import { insert, remove, findOneInDatabase, getWholeTable, update, multiSelect } from '../../biz/table/overSeasRelative.biz';
 import { route, required, log, HttpMethod, DataType } from '../../addon/route';
 
 //tb_overSeasRelative
@@ -13,7 +13,7 @@ export default class OverSeasRelativeController {
         unless: true,
     })
     @required({
-        'body': ['gender', 'residenceId', 'name','ethnicity' ,'relationToHouseHolder','updateUsrId'],
+        'body': ['gender', 'residenceId', 'name', 'ethnicity', 'relationToHouseHolder', 'updateUsrId'],
     })
     @log
     async insert(ctx: Context, next: Function): Promise<void> {
@@ -54,6 +54,22 @@ export default class OverSeasRelativeController {
     async retrieveOne(ctx: Context, next: Function): Promise<any> {
         try {
             var result = await findOneInDatabase('tb_overSeasRelative', 'residenceId', ctx.params.id, ctx.db);
+            ctx.success(result, 'success');
+        } catch (e) {
+            console.error(e);
+            ctx.error('error', e);
+        }
+    }
+    //多参数查询
+    @route({
+        path: '/multi',
+        method: HttpMethod.GET,
+        unless: true,
+    })
+    @log
+    async multiSelect(ctx: Context, next: Function): Promise<any> {
+        try {
+            var result = await multiSelect('tb_populationdetailed', ctx.request.body, ctx.sql, ctx.db);
             ctx.success(result, 'success');
         } catch (e) {
             console.error(e);
