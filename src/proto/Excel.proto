@@ -1,0 +1,33 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "com.maihe.proto.Excel";
+option java_outer_classname = "Excel";
+option objc_class_prefix = "MH";
+
+package Excel;
+
+service ExcelService {
+ //excel接口
+  rpc genExcel (excelParams) returns (excelResponse) {
+  }
+
+}
+
+message excelParams{
+  string excelName=1;
+  string excelRoute=2;
+  string excelHead=3;
+  string excelData=4;
+}
+
+message excelResponse{
+  string result =1;
+}
+
+
+
+
+
+
+

@@ -1,11 +1,10 @@
 import * as Router from 'koa-router';
 import { Context } from '../../utils/koa.util';
-import { insert, remove } from '../../biz/table/carInfo.biz';
-import { retrieve, update, findOneInDatabase } from '../../biz/public-crud.biz';
+import { insert, remove, findOneInDatabase, getWholeTable, update } from '../../biz/table/overSeasRelative.biz';
 import { route, required, log, HttpMethod, DataType } from '../../addon/route';
 
-//car_info
-export default class CarInfoController {
+//tb_overSeasRelative
+export default class OverSeasRelativeController {
 
     //增
     @route({
@@ -14,7 +13,7 @@ export default class CarInfoController {
         unless: true,
     })
     @required({
-        'body': ['empidCreate'],
+        'body': ['gender', 'residenceId', 'name','ethnicity' ,'relationToHouseHolder','updateUsrId'],
     })
     @log
     async insert(ctx: Context, next: Function): Promise<void> {
@@ -37,7 +36,7 @@ export default class CarInfoController {
     @log
     async retrieve(ctx: Context, next: Function): Promise<any> {
         try {
-            var result = await retrieve(ctx.request.query, ctx.db, 'car_info');
+            var result = await getWholeTable('tb_overSeasRelative', ctx.db);
             ctx.success(result, 'success');
         } catch (e) {
             console.error(e);
@@ -54,7 +53,7 @@ export default class CarInfoController {
     @log
     async retrieveOne(ctx: Context, next: Function): Promise<any> {
         try {
-            var result = await findOneInDatabase('car_info', 'id_', ctx.params.id, ctx.db);
+            var result = await findOneInDatabase('tb_overSeasRelative', 'residenceId', ctx.params.id, ctx.db);
             ctx.success(result, 'success');
         } catch (e) {
             console.error(e);
@@ -84,14 +83,17 @@ export default class CarInfoController {
 
     //改
     @route({
-        path: '/:id/:empidUpdate',
+        path: '/:id',
         method: HttpMethod.PATCH,
         unless: true,
+    })
+    @required({
+        'body': ['updateUsrId'],
     })
     @log
     async update(ctx: Context, next: Function): Promise<any> {
         try {
-            var result = await update(ctx.request.body, ctx.db, 'car_info', 'id_', ctx.params.id, ctx.params.empidUpdate);
+            var result = await update(ctx.request.body, ctx.sql, 'tb_overSeasRelative', 'residenceId', ctx.params.id, ctx.db);
             ctx.success(result, 'success');
         } catch (e) {
             console.error(e);
