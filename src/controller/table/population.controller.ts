@@ -69,7 +69,7 @@ export default class PopulationController {
     @log
     async multiSelect(ctx: Context, next: Function): Promise<any> {
         try {
-            var result = await multiSelect('tb_populationdetailed', ctx.request.body, ctx.sql, ctx.db);
+            var result = await multiSelect('tb_population', ctx.request.body, ctx.sql, ctx.db);
             ctx.success(result, 'success');
         } catch (e) {
             console.error(e);

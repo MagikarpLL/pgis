@@ -69,7 +69,7 @@ export default class OverSeasRelativeController {
     @log
     async multiSelect(ctx: Context, next: Function): Promise<any> {
         try {
-            var result = await multiSelect('tb_populationdetailed', ctx.request.body, ctx.sql, ctx.db);
+            var result = await multiSelect('tb_overSeasRelative', ctx.request.body, ctx.sql, ctx.db);
             ctx.success(result, 'success');
         } catch (e) {
             console.error(e);
