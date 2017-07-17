@@ -2,7 +2,8 @@ import { DBType } from "../../utils/db.util";
 import { Context } from '../../utils/koa.util';
 import Date from '../../utils/date.util';
 import { SQL } from '../../utils/sql.util';
-import OBJECT from '../../utils/object.util'
+import OBJECT from '../../utils/object.util';
+import { encode, decode } from '../../utils/crypto.util';
 
 //tb_overSeasRelative
 //insert
@@ -17,7 +18,7 @@ export async function insert(body: any, db: any, sql: SQL): Promise<any> {
         name: name,
         gender: gender,
         ethnicity: ethnicity,
-        birthday: birthday,
+        birthday: `to_date('${birthday}','yyyy-mm-dd')`,
         educationalDegree: educationalDegree,
         politicalStatus: politicalStatus,
         maritalStatus: maritalStatus,

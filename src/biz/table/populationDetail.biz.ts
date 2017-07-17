@@ -18,7 +18,7 @@ export async function insert(body: any, db: any, sql: SQL): Promise<any> {
         resettlement, leaveArmyReawrd, retireDate, retireCategory, workPlaceBeforeRetire, socialReliefId, reliefCategory, socialReliefRemark, fiveOldContactInfo, fiveOldCategory,
         fiveOldSpeciality, charge, rectificationCategory, RCStartDate, removeRCDate, drugDate, detoxificationDate, drugCategory, detoxificationPlace, releaseDate, professionStatus,
         acceptProcessCategory, originalSin, investigation, disputeCategory, investigationRemark, laidOffCategory, laidOffDate, laidOffContactInfo, workPlaceBeforeLaidOff,
-        formerUnitProperty, trainingIntention, economicTypeOfJob, workTypeSelection, salaryRequirements, rhflzMoveInDate, rhflzFormerAddress, updateUserId
+        formerUnitProperty, trainingIntention, economicTypeOfJob, workTypeSelection, salaryRequirements, rhflzMoveInDate, rhflzFormerAddress, updateUsrId
  } = body;
     const data = {
         idNumber: idNumber,
@@ -106,7 +106,7 @@ export async function insert(body: any, db: any, sql: SQL): Promise<any> {
         salaryRequirements: salaryRequirements,
         rhflzMoveInDate:  `to_date('${rhflzMoveInDate}','yyyy-mm-dd')`,
         rhflzFormerAddress: rhflzFormerAddress,
-        updateUserId: updateUserId,
+        updateUsrId: updateUsrId,
         updateTime:  `to_date('${createTime}','yyyy-mm-dd')`
     }
     sqlstr = sql.insert('tb_populationdetailed', data);

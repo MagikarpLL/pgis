@@ -13,7 +13,7 @@ export default class PropertyGisController {
         unless: true,
     })
     @required({
-        'body': ['roomId', 'district', 'street', 'neighborhood', 'building', 'unit', 'floor', 'room', 'updateUsrId', 'buildingId'],
+        'body': ['district', 'street', 'neighborhood', 'building', 'unit', 'floor', 'room', 'updateUsrId', 'buildingId'],
     })
     @log
     async insert(ctx: Context, next: Function): Promise<void> {
@@ -64,7 +64,7 @@ export default class PropertyGisController {
     //多参数查询
     @route({
         path: '/multi',
-        method: HttpMethod.GET,
+        method: HttpMethod.POST,
         unless: true,
     })
     @log

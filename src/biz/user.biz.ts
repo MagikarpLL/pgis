@@ -24,10 +24,10 @@ export async function login(db: any, body: any): Promise<string> {
 //注册
 export async function register(body: any, db: any): Promise<string> {
     body = decode(body);
-    let { userName, userPassword, updateUserId } = body;
+    let { userName, userPassword } = body;
     let uuid = UUID.genUUID();
     let createDate = Date.getDate();
-    const result = await db.edit(`INSERT INTO tb_usr values ('${uuid}','${userName}','${userPassword}',to_date('${createDate}','yyyy-mm-dd')，'${updateUserId}')`);
+    const result = await db.edit(`INSERT INTO tb_usr values ('${uuid}','${userName}','${userPassword}',to_date('${createDate}','yyyy-mm-dd')，'${uuid}')`);
     auth.addUserRoles(uuid, 'guest');
     return result;
 }

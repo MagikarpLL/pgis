@@ -91,17 +91,8 @@ export async function getWholeTable(tableName: string, db: any): Promise<any> {
 
 //获取单条数据
 export async function findOneInDatabase(tableName: string, primaryKeyName: string, primaryKeyValue: string, db: any) {
-    let sql: string;
-    switch (db.dbType) {
-        case DBType.MYSQL:
-            sql = `SELECT * FROM ${tableName} WHERE ${primaryKeyName} = '${primaryKeyValue}'`;
-            break;
-        case DBType.ORACLE:
-            sql = `SELECT * FROM ${tableName}WHERE ${primaryKeyName} = '${primaryKeyValue}'`;
-            break;
-        default:
-            throw new Error('DB not found!');
-    }
+
+    let sql = `SELECT * FROM ${tableName} WHERE ${primaryKeyName} = '${primaryKeyValue}'`;
     const result = await db.query(sql);
     const jsObj = JSON.parse(result.result);
     return jsObj[0];

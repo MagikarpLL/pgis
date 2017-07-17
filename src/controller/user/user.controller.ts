@@ -37,7 +37,7 @@ export default class UserController {
         unless: true,
     })
     @required({
-        'body': ['userName', 'userPassword', 'updateUserId'],
+        'body': ['userName', 'userPassword'],
     })
     @log
     async register(ctx: Context, next: Function): Promise<void> {

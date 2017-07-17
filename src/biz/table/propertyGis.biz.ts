@@ -3,17 +3,18 @@ import { Context } from '../../utils/koa.util';
 import Date from '../../utils/date.util';
 import { SQL } from '../../utils/sql.util';
 import OBJECT from '../../utils/object.util'
-
+import UUID from "../../utils/uuid.util";
 //tb_propertyGis
 //insert
 export async function insert(body: any, db: any, sql: SQL): Promise<any> {
     let sqlstr: string;
     let createTime = Date.getDateTime();
-    let { roomId, district, street, neighborhood, building, unit, floor, room,
+    let uuid = UUID.genUUID();
+    let {  district, street, neighborhood, building, unit, floor, room,
         buildingId, updateUsrId
  } = body;
     const data = {
-        roomId: roomId,
+        roomId: uuid,
         district: district,
         street: street,
         neighborhood: neighborhood,
@@ -84,6 +85,12 @@ export async function update(body: any, sql: SQL, tableName: string, primaryKey:
 
 
 
-
+//多参数查询
+export async function multiSelect(tableName: string, body: any, sql: SQL, db: any) {
+    let sqlstr = sql.multiSelect(tableName, body);
+    const result = await db.query(sqlstr);
+    const jsObj = JSON.parse(result.result);
+    return jsObj;
+}
 
 

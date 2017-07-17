@@ -1,10 +1,10 @@
 import * as Router from 'koa-router';
 import { Context } from '../utils/koa.util';
 import { route, required, log, HttpMethod, DataType } from '../addon/route';
-// import {
-//     getRoleUsers, getUserRoles, allow, allowedPermissions,
-//     removeAllow, hasRole, removeResource, removeRole
-// } from '../utils/auth.util'
+import {
+    getRoleUsers, getUserRoles, allow, allowedPermissions,
+    removeAllow, hasRole, removeResource, removeRole
+} from '../utils/auth.util'
 /**
  * 路由加载规则
  * 文件命名必须以.controller.ts结尾
@@ -14,18 +14,18 @@ export default class AuthController {
 
     @route({
         path: '/getRoleUsers',
-        method: HttpMethod.POST,
+        method: HttpMethod.GET,
         unless: true,
     })
     @required({
-        'body': ['roleName'],
+        'query': ['roleName'],
     })
     @log
     async getRoleUsers(ctx: Context, next: Function): Promise<void> {
         try {
-            let { roleName } = ctx.request.body;
-            // const obj = await getRoleUsers(roleName);
-            // ctx.success({ users: obj }, 'success');
+            let { roleName } = ctx.request.query;
+            const obj = await getRoleUsers(roleName);
+            ctx.success({ users: obj }, 'success');
         } catch (e) {
             console.error(e);
             ctx.error('error', e);
@@ -35,14 +35,14 @@ export default class AuthController {
 
     @route({
         path: '/getUserRoles/:id',
-        method: HttpMethod.POST,
+        method: HttpMethod.GET,
         unless: true,
     })
     @log
     async getUserRoles(ctx: Context, next: Function): Promise<void> {
         try {
-            // const obj = await getUserRoles(ctx.params.id);
-            // ctx.success({ roles: obj }, 'success');
+            const obj = await getUserRoles(ctx.params.id);
+            ctx.success({ roles: obj }, 'success');
         } catch (e) {
             console.error(e);
             ctx.error('error', e);
@@ -61,9 +61,9 @@ export default class AuthController {
     @log
     async allow(ctx: Context, next: Function): Promise<void> {
         try {
-            // let { roles, resources, perimissions } = ctx.request.body;
-            // const obj = await allow(roles, resources, perimissions);
-            // ctx.success({ status: obj }, 'success');
+            let { roles, resources, perimissions } = ctx.request.body;
+            const obj = await allow(roles, resources, perimissions);
+            ctx.success({ status: obj }, 'success');
         } catch (e) {
             console.error(e);
             ctx.error('error', e);
@@ -81,9 +81,9 @@ export default class AuthController {
     @log
     async removeAllow(ctx: Context, next: Function): Promise<void> {
         try {
-            // let { roles, resources, perimissions } = ctx.request.body;
-            // const obj = await removeAllow(roles, resources, perimissions);
-            // ctx.success({ permissions: obj }, 'success');
+            let { roles, resources, perimissions } = ctx.request.body;
+            const obj = await removeAllow(roles, resources, perimissions);
+            ctx.success({ permissions: obj }, 'success');
         } catch (e) {
             console.error(e);
             ctx.error('error', e);
@@ -101,9 +101,9 @@ export default class AuthController {
     @log
     async removeResource(ctx: Context, next: Function): Promise<void> {
         try {
-            // let { resources } = ctx.request.body;
-            // const obj = await removeResource(resources);
-            // ctx.success({ status: obj }, 'success');
+            let { resources } = ctx.request.body;
+            const obj = await removeResource(resources);
+            ctx.success({ status: obj }, 'success');
         } catch (e) {
             console.error(e);
             ctx.error('error', e);
@@ -121,9 +121,9 @@ export default class AuthController {
     @log
     async removeRole(ctx: Context, next: Function): Promise<void> {
         try {
-            // let { roleName } = ctx.request.body;
-            // const obj = await removeRole(roleName);
-            // ctx.success({ status: obj }, 'success');
+            let { roleName } = ctx.request.body;
+            const obj = await removeRole(roleName);
+            ctx.success({ status: obj }, 'success');
         } catch (e) {
             console.error(e);
             ctx.error('error', e);
@@ -134,18 +134,18 @@ export default class AuthController {
 
     @route({
         path: '/allowedPermissions/:id',
-        method: HttpMethod.POST,
+        method: HttpMethod.GET,
         unless: true,
     })
     @required({
-        'body': ['resources'],
+        'query': ['resources'],
     })
     @log
     async allowedPermissions(ctx: Context, next: Function): Promise<void> {
         try {
-            // let { resources } = ctx.request.body;
-            // const obj = await allowedPermissions(ctx.params.id, resources);
-            // ctx.success({ permissions: obj }, 'success');
+            let { resources } = ctx.request.query;
+            const obj = await allowedPermissions(ctx.params.id, resources);
+            ctx.success({ permissions: obj }, 'success');
         } catch (e) {
             console.error(e);
             ctx.error('error', e);
@@ -164,9 +164,9 @@ export default class AuthController {
     @log
     async hasRole(ctx: Context, next: Function): Promise<void> {
         try {
-            // let { roleName } = ctx.request.body;
-            // const obj = await hasRole(ctx.params.id, roleName);
-            // ctx.success({ status: obj }, 'success');
+            let { roleName } = ctx.request.body;
+            const obj = await hasRole(ctx.params.id, roleName);
+            ctx.success({ status: obj }, 'success');
         } catch (e) {
             console.error(e);
             ctx.error('error', e);

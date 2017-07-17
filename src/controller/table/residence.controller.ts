@@ -65,7 +65,7 @@ export default class ResidenceController {
     //多参数查询
     @route({
         path: '/multi',
-        method: HttpMethod.GET,
+        method: HttpMethod.POST,
         unless: true,
     })
     @log
