@@ -2,6 +2,7 @@ import * as Router from 'koa-router';
 import { Context } from '../../utils/koa.util';
 import { insert, remove, findOneInDatabase, getWholeTable, update, multiSelect } from '../../biz/table/overSeasRelative.biz';
 import { route, required, log, HttpMethod, DataType } from '../../addon/route';
+import { encode, decode } from '../../utils/crypto.util';
 
 //tb_overSeasRelative
 export default class OverSeasRelativeController {
@@ -18,8 +19,9 @@ export default class OverSeasRelativeController {
     @log
     async insert(ctx: Context, next: Function): Promise<void> {
         try {
-
-            let result = await insert(ctx.request.body, ctx.db, ctx.sql);
+            let body = decode(ctx.request.body);
+            body = JSON.parse(body);
+            let result = await insert(body, ctx.db, ctx.sql);
             ctx.success(result, 'success');
         } catch (e) {
             console.error(e);
@@ -37,7 +39,8 @@ export default class OverSeasRelativeController {
     async retrieve(ctx: Context, next: Function): Promise<any> {
         try {
             var result = await getWholeTable('tb_overSeasRelative', ctx.db);
-            ctx.success(result, 'success');
+            let ret=encode(result.result);
+            ctx.success(ret, 'success');
         } catch (e) {
             console.error(e);
             ctx.error('error', e);
@@ -53,8 +56,10 @@ export default class OverSeasRelativeController {
     @log
     async retrieveOne(ctx: Context, next: Function): Promise<any> {
         try {
-            var result = await findOneInDatabase('tb_overSeasRelative', 'residenceId', ctx.params.id, ctx.db);
-            ctx.success(result, 'success');
+            let id = decode(ctx.params.id);
+            var result = await findOneInDatabase('tb_overSeasRelative', 'residenceId', id, ctx.db);
+            let ret=encode(result.result);
+            ctx.success(ret, 'success');
         } catch (e) {
             console.error(e);
             ctx.error('error', e);
@@ -69,7 +74,9 @@ export default class OverSeasRelativeController {
     @log
     async multiSelect(ctx: Context, next: Function): Promise<any> {
         try {
-            var result = await multiSelect('tb_overSeasRelative', ctx.request.body, ctx.sql, ctx.db);
+            let body = decode(ctx.request.body);
+            body = JSON.parse(body);
+            var result = await multiSelect('tb_overSeasRelative', body, ctx.sql, ctx.db);
             ctx.success(result, 'success');
         } catch (e) {
             console.error(e);
@@ -86,8 +93,8 @@ export default class OverSeasRelativeController {
     @log
     async remove(ctx: Context, next: Function): Promise<void> {
         try {
-
-            let result = await remove(ctx.db, ctx.params.id, ctx.sql);
+            let id = decode(ctx.params.id);
+            let result = await remove(ctx.db, id, ctx.sql);
             ctx.success(result, 'success');
         } catch (e) {
             console.error(e);
@@ -109,7 +116,10 @@ export default class OverSeasRelativeController {
     @log
     async update(ctx: Context, next: Function): Promise<any> {
         try {
-            var result = await update(ctx.request.body, ctx.sql, 'tb_overSeasRelative', 'residenceId', ctx.params.id, ctx.db);
+            let id = decode(ctx.params.id);
+            let body = decode(ctx.request.body);
+            body = JSON.parse(body);
+            var result = await update(body, ctx.sql, 'tb_overSeasRelative', 'residenceId', id, ctx.db);
             ctx.success(result, 'success');
         } catch (e) {
             console.error(e);

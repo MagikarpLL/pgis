@@ -4,6 +4,7 @@ import Date from '../../utils/date.util';
 import { SQL } from '../../utils/sql.util';
 import OBJECT from '../../utils/object.util'
 import UUID from "../../utils/uuid.util";
+
 //tb_propertyGis
 //insert
 export async function insert(body: any, db: any, sql: SQL): Promise<any> {

@@ -2,31 +2,31 @@ import * as Router from 'koa-router';
 import { Context } from '../../utils/koa.util';
 import { insert, remove, findOneInDatabase, getWholeTable, update, multiSelect } from '../../biz/table/propertyGis.biz';
 import { route, required, log, HttpMethod, DataType } from '../../addon/route';
-
+import { encode, decode } from '../../utils/crypto.util';
 //tb_propertyGis
 export default class PropertyGisController {
-
-    //增
-    @route({
-        path: '',
-        method: HttpMethod.POST,
-        unless: true,
-    })
-    @required({
-        'body': ['district', 'street', 'neighborhood', 'building', 'unit', 'floor', 'room', 'updateUsrId', 'buildingId'],
-    })
-    @log
-    async insert(ctx: Context, next: Function): Promise<void> {
-        try {
-
-            let result = await insert(ctx.request.body, ctx.db, ctx.sql);
-            ctx.success(result, 'success');
-        } catch (e) {
-            console.error(e);
-            ctx.error('error', e);
+    /*
+        //增
+        @route({
+            path: '',
+            method: HttpMethod.POST,
+            unless: true,
+        })
+        @required({
+            'body': ['district', 'street', 'neighborhood', 'building', 'unit', 'floor', 'room', 'updateUsrId', 'buildingId'],
+        })
+        @log
+        async insert(ctx: Context, next: Function): Promise<void> {
+            try {
+    
+                let result = await insert(ctx.request.body, ctx.db, ctx.sql);
+                ctx.success(result, 'success');
+            } catch (e) {
+                console.error(e);
+                ctx.error('error', e);
+            }
         }
-    }
-
+    */
     //查
     @route({
         path: '',
@@ -53,7 +53,8 @@ export default class PropertyGisController {
     @log
     async retrieveOne(ctx: Context, next: Function): Promise<any> {
         try {
-            var result = await findOneInDatabase('tb_propertyGis', 'roomId', ctx.params.id, ctx.db);
+            let id = decode(ctx.params.id);
+            var result = await findOneInDatabase('tb_propertyGis', 'roomId', id, ctx.db);
             ctx.success(result, 'success');
         } catch (e) {
             console.error(e);
@@ -70,53 +71,54 @@ export default class PropertyGisController {
     @log
     async multiSelect(ctx: Context, next: Function): Promise<any> {
         try {
-            console.log(ctx.request);
-            var result = await multiSelect('tb_propertyGis', ctx.request.body, ctx.sql, ctx.db);
+            let body = decode(ctx.request.body);
+            body = JSON.parse(body);
+            var result = await multiSelect('tb_propertyGis', body, ctx.sql, ctx.db);
             ctx.success(result, 'success');
         } catch (e) {
             console.error(e);
             ctx.error('error', e);
         }
     }
-
-    //删
-    @route({
-        path: '/:id',
-        method: HttpMethod.DELETE,
-        unless: true,
-    })
-    @log
-    async remove(ctx: Context, next: Function): Promise<void> {
-        try {
-
-            let result = await remove(ctx.db, ctx.params.id, ctx.sql);
-            ctx.success(result, 'success');
-        } catch (e) {
-            console.error(e);
-            ctx.error('error', e);
+    /*
+        //删
+        @route({
+            path: '/:id',
+            method: HttpMethod.DELETE,
+            unless: true,
+        })
+        @log
+        async remove(ctx: Context, next: Function): Promise<void> {
+            try {
+    
+                let result = await remove(ctx.db, ctx.params.id, ctx.sql);
+                ctx.success(result, 'success');
+            } catch (e) {
+                console.error(e);
+                ctx.error('error', e);
+            }
         }
-    }
+    */
 
-
-
-    //改
-    @route({
-        path: '/:id',
-        method: HttpMethod.PATCH,
-        unless: true,
-    })
-    @required({
-        'body': ['updateUsrId'],
-    })
-    @log
-    async update(ctx: Context, next: Function): Promise<any> {
-        try {
-            var result = await update(ctx.request.body, ctx.sql, 'tb_propertyGis', 'roomId', ctx.params.id, ctx.db);
-            ctx.success(result, 'success');
-        } catch (e) {
-            console.error(e);
-            ctx.error('error', e);
+    /*
+        //改
+        @route({
+            path: '/:id',
+            method: HttpMethod.PATCH,
+            unless: true,
+        })
+        @required({
+            'body': ['updateUsrId'],
+        })
+        @log
+        async update(ctx: Context, next: Function): Promise<any> {
+            try {
+                var result = await update(ctx.request.body, ctx.sql, 'tb_propertyGis', 'roomId', ctx.params.id, ctx.db);
+                ctx.success(result, 'success');
+            } catch (e) {
+                console.error(e);
+                ctx.error('error', e);
+            }
         }
-    }
-
+    */
 }

@@ -12,7 +12,9 @@ export async function modifyUserRole(id: string, oldRoles: any, newRoles: any) {
 }
 //登录
 export async function login(db: any, body: any): Promise<string> {
+
     body = decode(body);
+    body = JSON.parse(body);
     let { username, mpassword } = body;
     const obj: any = await db.query(`SELECT * from tb_usr where username='${username}'`);
     let jsobj = JSON.parse(obj.result);
@@ -23,7 +25,9 @@ export async function login(db: any, body: any): Promise<string> {
 }
 //注册
 export async function register(body: any, db: any): Promise<string> {
+
     body = decode(body);
+    body = JSON.parse(body);
     let { userName, userPassword } = body;
     let uuid = UUID.genUUID();
     let createDate = Date.getDate();
