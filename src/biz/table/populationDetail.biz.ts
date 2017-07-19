@@ -2,7 +2,6 @@ import { DBType } from "../../utils/db.util";
 import { Context } from '../../utils/koa.util';
 import Date from '../../utils/date.util';
 import { SQL } from '../../utils/sql.util';
-import { humpToLine, humpToLineTable } from '../../utils/split.util';
 import OBJECT from '../../utils/object.util'
 
 //tb_populationdetailed
@@ -144,13 +143,12 @@ export async function getWholeTable(tableName: string, db: any): Promise<any> {
 //获取单条数据
 export async function findOneInDatabase(tableName: string, primaryKeyName: string, primaryKeyValue: string, db: any) {
     let sql: string;
-    let DBtableName = humpToLineTable(tableName);
     switch (db.dbType) {
         case DBType.MYSQL:
-            sql = `SELECT * FROM ${DBtableName} WHERE ${primaryKeyName} = '${primaryKeyValue}'`;
+            sql = `SELECT * FROM ${tableName} WHERE ${primaryKeyName} = '${primaryKeyValue}'`;
             break;
         case DBType.ORACLE:
-            sql = `SELECT * FROM ${DBtableName}WHERE ${primaryKeyName} = '${primaryKeyValue}'`;
+            sql = `SELECT * FROM ${tableName}WHERE ${primaryKeyName} = '${primaryKeyValue}'`;
             break;
         default:
             throw new Error('DB not found!');
@@ -163,7 +161,6 @@ export async function findOneInDatabase(tableName: string, primaryKeyName: strin
 //更新
 export async function update(body: any, sql: SQL, tableName: string, primaryKey: string, primaryKeyValue: string, db: any): Promise<any> {
     let sqlstr: string;
-    tableName= humpToLineTable(tableName);
     sqlstr = sql.update(tableName, body, primaryKey, primaryKeyValue);
     const result = await db.edit(sqlstr);
 }
