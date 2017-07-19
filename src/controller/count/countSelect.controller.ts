@@ -2,7 +2,7 @@ import * as Router from 'koa-router';
 import { Context } from '../../utils/koa.util';
 import { route, required, log, HttpMethod, DataType } from '../../addon/route';
 import { lineToHump } from '../../utils/split.util';
-import { building, unit } from "../../biz/countSelect.biz";
+import { building, unit,room } from "../../biz/countSelect.biz";
 
 export default class CountSelectController {
 
@@ -63,7 +63,7 @@ export default class CountSelectController {
     async room(ctx: Context, next: Function): Promise<void> {
         try {
             console.log(ctx.request.body);
-            let result = await unit(ctx.request.body, ctx.db, ctx.sql);
+            let result = await room(ctx.request.body, ctx.db, ctx.sql);
             console.log(result);
             ctx.success(result, 'success');
         } catch (e) {
