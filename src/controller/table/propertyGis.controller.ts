@@ -70,6 +70,7 @@ export default class PropertyGisController {
     @log
     async multiSelect(ctx: Context, next: Function): Promise<any> {
         try {
+            console.log(ctx.request);
             var result = await multiSelect('tb_propertyGis', ctx.request.body, ctx.sql, ctx.db);
             ctx.success(result, 'success');
         } catch (e) {

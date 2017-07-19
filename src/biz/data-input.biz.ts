@@ -23,9 +23,9 @@ export async function residence(body: any, db: any, sql: SQL): Promise<any> {
 export async function populationDetailed(body: any, db: any, sql: SQL): Promise<any> {
     grpcServer.init('InputDataService');
     let sqlExec = "";
-    let residenceData = body.residence;
-    for (let i in residenceData) {
-        sqlExec = sqlExec + sql.insert("TB_POPULATIONDETAILED", residenceData[i]) + ";";
+    let populationDetailed = body.populationDetailed;
+    for (let i in populationDetailed) {
+        sqlExec = sqlExec + sql.insert("TB_POPULATIONDETAILED", populationDetailed[i]) + ";";
     }
     return await grpcServer.call('inputData', {inputDataSql : sqlExec});
 }
@@ -35,9 +35,9 @@ export async function populationDetailed(body: any, db: any, sql: SQL): Promise<
 export async function population(body: any, db: any, sql: SQL): Promise<any> {
     grpcServer.init('InputDataService');
     let sqlExec = "";
-    let residenceData = body.residence;
-    for (let i in residenceData) {
-        sqlExec = sqlExec + sql.insert("TB_POPULATION", residenceData[i]) + ";";
+    let population = body.population;
+    for (let i in population) {
+        sqlExec = sqlExec + sql.insert("TB_POPULATION", population[i]) + ";";
     }
     return await grpcServer.call('inputData', {inputDataSql : sqlExec});
 }
@@ -47,9 +47,9 @@ export async function population(body: any, db: any, sql: SQL): Promise<any> {
 export async function overSeaRelative(body: any, db: any, sql: SQL): Promise<any> {
     grpcServer.init('InputDataService');
     let sqlExec = "";
-    let residenceData = body.residence;
-    for (let i in residenceData) {
-        sqlExec = sqlExec + sql.insert("TB_OVERSEASRELATIVE", residenceData[i]) + ";";
+    let overSeaRelative = body.overSeaRelative;
+    for (let i in overSeaRelative) {
+        sqlExec = sqlExec + sql.insert("TB_OVERSEASRELATIVE", overSeaRelative[i]) + ";";
     }
     return await grpcServer.call('inputData', {inputDataSql : sqlExec});
 }
