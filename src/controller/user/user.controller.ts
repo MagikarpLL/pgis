@@ -16,14 +16,13 @@ export default class UserController {
         method: HttpMethod.POST,
         unless: true,
     })
-    @required({
-        'body': ['username', 'mpassword',],
-    })
+
     @log
     async login(ctx: Context, next: Function): Promise<void> {
         try {
+            console.log('body is ', ctx.request.body);
             const obj = await login(ctx.db, ctx.request.body);
-            ctx.success({ userId: obj }, 'success');
+            ctx.success({ usrId: obj }, 'success');
         } catch (e) {
             console.error(e);
             ctx.error('error', e);

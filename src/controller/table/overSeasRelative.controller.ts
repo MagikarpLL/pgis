@@ -39,8 +39,8 @@ export default class OverSeasRelativeController {
     async retrieve(ctx: Context, next: Function): Promise<any> {
         try {
             var result = await getWholeTable('tb_overSeasRelative', ctx.db);
-            let ret=encode(result.result);
-            ctx.success(ret, 'success');
+            let fin=encode(result.result);
+            ctx.success(fin, 'success');
         } catch (e) {
             console.error(e);
             ctx.error('error', e);
@@ -58,8 +58,8 @@ export default class OverSeasRelativeController {
         try {
             let id = decode(ctx.params.id);
             var result = await findOneInDatabase('tb_overSeasRelative', 'residenceId', id, ctx.db);
-            let ret=encode(result.result);
-            ctx.success(ret, 'success');
+            let fin=encode(result.result);
+            ctx.success(fin, 'success');
         } catch (e) {
             console.error(e);
             ctx.error('error', e);
@@ -77,7 +77,8 @@ export default class OverSeasRelativeController {
             let body = decode(ctx.request.body);
             body = JSON.parse(body);
             var result = await multiSelect('tb_overSeasRelative', body, ctx.sql, ctx.db);
-            ctx.success(result, 'success');
+            let fin=encode(result.result);
+            ctx.success(fin, 'success');
         } catch (e) {
             console.error(e);
             ctx.error('error', e);

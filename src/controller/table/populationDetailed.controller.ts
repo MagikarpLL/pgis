@@ -38,7 +38,8 @@ export default class PopulationDetailedController {
     async retrieve(ctx: Context, next: Function): Promise<any> {
         try {
             var result = await getWholeTable('tb_populationdetailed', ctx.db);
-            ctx.success(result, 'success');
+            let fin = encode(result.result);
+            ctx.success(fin, 'success');
         } catch (e) {
             console.error(e);
             ctx.error('error', e);

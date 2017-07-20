@@ -38,7 +38,8 @@ export default class PopulationController {
     async retrieve(ctx: Context, next: Function): Promise<any> {
         try {
             var result = await getWholeTable('tb_population', ctx.db);
-            ctx.success(result, 'success');
+            let fin = encode(result.result);
+            ctx.success(fin, 'success');
         } catch (e) {
             console.error(e);
             ctx.error('error', e);
@@ -56,7 +57,8 @@ export default class PopulationController {
         try {
             let id = decode(ctx.params.id);
             var result = await findOneInDatabase('tb_population', 'idNumber', id, ctx.db);
-            ctx.success(result, 'success');
+            let fin = encode(result.result);
+            ctx.success(fin, 'success');
         } catch (e) {
             console.error(e);
             ctx.error('error', e);
@@ -74,7 +76,8 @@ export default class PopulationController {
             let body = decode(ctx.request.body);
             body = JSON.parse(body);
             var result = await multiSelect('tb_population', body, ctx.sql, ctx.db);
-            ctx.success(result, 'success');
+            let fin = encode(result.result);
+            ctx.success(fin, 'success');
         } catch (e) {
             console.error(e);
             ctx.error('error', e);

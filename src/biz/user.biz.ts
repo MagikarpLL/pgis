@@ -12,14 +12,15 @@ export async function modifyUserRole(id: string, oldRoles: any, newRoles: any) {
 }
 //登录
 export async function login(db: any, body: any): Promise<string> {
-
-    body = decode(body);
+    body = decode(body.value);
+    console.log('body after decode :', body)
     body = JSON.parse(body);
+    console.log('body after parse : ',body);
     let { username, mpassword } = body;
-    const obj: any = await db.query(`SELECT * from tb_usr where username='${username}'`);
+    const obj: any = await db.query(`SELECT * from tb_usr where usrname='${username}'`);
     let jsobj = JSON.parse(obj.result);
-    let password = String(jsobj[0].userPassword);
-    if (password == mpassword) return jsobj[0].userId;
+    let password = String(jsobj[0].USRPASSWORD);
+    if (password === mpassword) return encode(jsobj[0].USRID);
     else return "wrong password";
 
 }
