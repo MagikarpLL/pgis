@@ -18,6 +18,10 @@ export async function insert(body: any, db: any, sql: SQL): Promise<any> {
         socialSecurity, pensionCategory, personNelCategory, peopleliveHoodCategory,
         updateUsrId
  } = body;
+    if (idNumber == undefined || residenceId == undefined || name == undefined || updateUsrId == undefined
+        || gender == undefined || birthday == undefined || ethnicity == undefined || relationToHouseHolder == undefined) {
+        throw "required params are not all defined,check your input";
+    }
     const data = {
         idNumber: idNumber,
         residenceId: residenceId,
@@ -101,6 +105,10 @@ export async function findOneInDatabase(tableName: string, primaryKeyName: strin
 //更新
 export async function update(body: any, sql: SQL, tableName: string, primaryKey: string, primaryKeyValue: string, db: any): Promise<any> {
     let sqlstr: string;
+    let { updateUsrId } = body;
+    if (updateUsrId == undefined) {
+        throw "Missing updateUsrId , check input";
+    }
     sqlstr = sql.update(tableName, body, primaryKey, primaryKeyValue);
     const result = await db.edit(sqlstr);
 }

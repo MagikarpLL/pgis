@@ -7,12 +7,17 @@ import OBJECT from '../../utils/object.util';
 
 //tb_overSeasRelative
 //insert
+
 export async function insert(body: any, db: any, sql: SQL): Promise<any> {
     let sqlstr: string;
     let createTime = Date.getDate();
     let { residenceId, name, gender, ethnicity, birthday, educationalDegree, politicalStatus, maritalStatus, contactInfo,
         relationToHouseHolder, residentialAddress, updateUsrId
  } = body;
+    if (gender == undefined || residenceId == undefined || name == undefined || ethnicity == undefined ||
+        relationToHouseHolder == undefined || updateUsrId == undefined) {
+        throw "required params are not all defined,check your input";
+    }
     const data = {
         residenceId: residenceId,
         name: name,
@@ -81,6 +86,10 @@ export async function findOneInDatabase(tableName: string, primaryKeyName: strin
 //更新
 export async function update(body: any, sql: SQL, tableName: string, primaryKey: string, primaryKeyValue: string, db: any): Promise<any> {
     let sqlstr: string;
+    let { updateUsrId } = body;
+    if(updateUsrId==undefined){
+        throw "Missing updateUsrId , check input";
+    }
     sqlstr = sql.update(tableName, body, primaryKey, primaryKeyValue);
     const result = await db.edit(sqlstr);
 }

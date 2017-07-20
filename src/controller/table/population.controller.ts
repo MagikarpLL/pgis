@@ -13,12 +13,12 @@ export default class PopulationController {
         unless: true,
     })
     @required({
-        'body': ['idNumber', 'residenceId', 'name', 'gender', 'ethnicity', 'birthday', 'relationToHouseHolder', 'updateUsrId'],
+        'body': 'value'
     })
     @log
     async insert(ctx: Context, next: Function): Promise<void> {
         try {
-            let body = decode(ctx.request.body);
+            let body = decode(ctx.request.body.value);
             body = JSON.parse(body);
             let result = await insert(body, ctx.db, ctx.sql);
             ctx.success(result, 'success');
@@ -38,7 +38,7 @@ export default class PopulationController {
     async retrieve(ctx: Context, next: Function): Promise<any> {
         try {
             var result = await getWholeTable('tb_population', ctx.db);
-            let fin = encode(result.result);
+            let fin = encode(JSON.stringify(result));
             ctx.success(fin, 'success');
         } catch (e) {
             console.error(e);
@@ -57,7 +57,7 @@ export default class PopulationController {
         try {
             let id = decode(ctx.params.id);
             var result = await findOneInDatabase('tb_population', 'idNumber', id, ctx.db);
-            let fin = encode(result.result);
+            let fin = encode(JSON.stringify(result));
             ctx.success(fin, 'success');
         } catch (e) {
             console.error(e);
@@ -73,10 +73,10 @@ export default class PopulationController {
     @log
     async multiSelect(ctx: Context, next: Function): Promise<any> {
         try {
-            let body = decode(ctx.request.body);
+            let body = decode(ctx.request.body.value);
             body = JSON.parse(body);
             var result = await multiSelect('tb_population', body, ctx.sql, ctx.db);
-            let fin = encode(result.result);
+            let fin = encode(JSON.stringify(result));
             ctx.success(fin, 'success');
         } catch (e) {
             console.error(e);
@@ -110,14 +110,11 @@ export default class PopulationController {
         method: HttpMethod.PATCH,
         unless: true,
     })
-    @required({
-        'body': ['updateUsrId'],
-    })
     @log
     async update(ctx: Context, next: Function): Promise<any> {
         try {
             let id = decode(ctx.params.id);
-            let body = decode(ctx.request.body);
+            let body = decode(ctx.request.body.value);
             body = JSON.parse(body);
             var result = await update(body, ctx.sql, 'tb_population', 'idNumber', id, ctx.db);
             ctx.success(result, 'success');

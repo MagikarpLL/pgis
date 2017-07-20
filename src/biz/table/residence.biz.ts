@@ -6,29 +6,35 @@ import OBJECT from '../../utils/object.util';
 
 //tb_residence
 //insert
+
 export async function insert(body: any, db: any, sql: SQL): Promise<any> {
     let sqlstr: string;
     let createTime = Date.getDate();
-    let { houseHoldId, roomId, registerUnit, localatTribute, registrant, registerDate,
-        houseHolderName, houseHolderId, housingArea, housingCategory, familyPlanningCategory,
+    let { householdId, roomId, registerUnit, localAttribute, registrant, registerDate,
+        householderName, householderId, housingArea, housingCategory, familyPlanningCategory,
         phone, postcode, updateUsrId,
  } = body;
+    if (roomId == undefined || householdId == undefined || registrant == undefined || phone == undefined ||
+        householderName == undefined || householderId == undefined || housingArea == undefined || housingCategory == undefined
+        || familyPlanningCategory == undefined || updateUsrId == undefined || registerDate == undefined) {
+        throw "required params are not all defined,check your input";
+    }
     const data = {
-        houseHoldId: houseHoldId,
+        houseHoldId: householdId,
         roomId: roomId,
         registerUnit: registerUnit,
-        localatTribute: localatTribute,
+        localAttribute: localAttribute,
         registrant: registrant,
-        registerDate:  `to_date('${registerDate}','yyyy-mm-dd')`,
-        houseHolderName: houseHolderName,
-        houseHolderId: houseHolderId,
+        registerDate: `to_date('${registerDate}','yyyy-mm-dd')`,
+        houseHolderName: householderName,
+        houseHolderId: householderId,
         housingArea: housingArea,
         housingCategory: housingCategory,
         familyPlanningCategory: familyPlanningCategory,
         phone: phone,
         postcode: postcode,
         updateUsrId: updateUsrId,
-        updateTime:  `to_date('${createTime}','yyyy-mm-dd')`
+        updateTime: `to_date('${createTime}','yyyy-mm-dd')`
     }
     sqlstr = sql.insert('tb_residence', data);
     const result = db.edit(sqlstr);
@@ -83,6 +89,10 @@ export async function findOneInDatabase(tableName: string, primaryKeyName: strin
 //更新
 export async function update(body: any, sql: SQL, tableName: string, primaryKey: string, primaryKeyValue: string, db: any): Promise<any> {
     let sqlstr: string;
+    let { updateUsrId } = body;
+    if (updateUsrId == undefined) {
+        throw "Missing updateUsrId , check input";
+    }
     sqlstr = sql.update(tableName, body, primaryKey, primaryKeyValue);
     const result = await db.edit(sqlstr);
 }

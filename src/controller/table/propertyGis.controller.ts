@@ -20,7 +20,7 @@ export default class PropertyGisController {
             try {
     
                 let result = await insert(ctx.request.body, ctx.db, ctx.sql);
-                ctx.success(result, 'success');
+                  let fin = encode(result.result);             ctx.success(fin, 'success');
             } catch (e) {
                 console.error(e);
                 ctx.error('error', e);
@@ -37,7 +37,8 @@ export default class PropertyGisController {
     async retrieve(ctx: Context, next: Function): Promise<any> {
         try {
             var result = await getWholeTable('tb_propertyGis', ctx.db);
-            ctx.success(result, 'success');
+            let fin = encode(result.result);
+            ctx.success(fin, 'success');
         } catch (e) {
             console.error(e);
             ctx.error('error', e);
@@ -55,7 +56,8 @@ export default class PropertyGisController {
         try {
             let id = decode(ctx.params.id);
             var result = await findOneInDatabase('tb_propertyGis', 'roomId', id, ctx.db);
-            ctx.success(result, 'success');
+            let fin = encode(result.result);
+            ctx.success(fin, 'success');
         } catch (e) {
             console.error(e);
             ctx.error('error', e);
@@ -71,10 +73,11 @@ export default class PropertyGisController {
     @log
     async multiSelect(ctx: Context, next: Function): Promise<any> {
         try {
-            let body = decode(ctx.request.body);
+            let body = decode(ctx.request.body.value);
             body = JSON.parse(body);
             var result = await multiSelect('tb_propertyGis', body, ctx.sql, ctx.db);
-            ctx.success(result, 'success');
+            let fin = encode(JSON.stringify(result));
+            ctx.success(fin, 'success');
         } catch (e) {
             console.error(e);
             ctx.error('error', e);
@@ -92,7 +95,7 @@ export default class PropertyGisController {
             try {
     
                 let result = await remove(ctx.db, ctx.params.id, ctx.sql);
-                ctx.success(result, 'success');
+                  let fin = encode(result.result);             ctx.success(fin, 'success');
             } catch (e) {
                 console.error(e);
                 ctx.error('error', e);
@@ -114,7 +117,7 @@ export default class PropertyGisController {
         async update(ctx: Context, next: Function): Promise<any> {
             try {
                 var result = await update(ctx.request.body, ctx.sql, 'tb_propertyGis', 'roomId', ctx.params.id, ctx.db);
-                ctx.success(result, 'success');
+                  let fin = encode(result.result);             ctx.success(fin, 'success');
             } catch (e) {
                 console.error(e);
                 ctx.error('error', e);

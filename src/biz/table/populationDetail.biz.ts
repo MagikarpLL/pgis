@@ -6,6 +6,7 @@ import OBJECT from '../../utils/object.util'
 
 //tb_populationdetailed
 //insert
+
 export async function insert(body: any, db: any, sql: SQL): Promise<any> {
     let sqlstr: string;
     let createTime = Date.getDateTime();
@@ -19,58 +20,61 @@ export async function insert(body: any, db: any, sql: SQL): Promise<any> {
         acceptProcessCategory, originalSin, investigation, disputeCategory, investigationRemark, laidOffCategory, laidOffDate, laidOffContactInfo, workPlaceBeforeLaidOff,
         formerUnitProperty, trainingIntention, economicTypeOfJob, workTypeSelection, salaryRequirements, rhflzMoveInDate, rhflzFormerAddress, updateUsrId
  } = body;
+    if (idNumber == undefined || residenceId == undefined || name == undefined || updateUsrId == undefined) {
+        throw "required params are not all defined,check your input";
+    }
     const data = {
         idNumber: idNumber,
         residenceId: residenceId,
         name: name,
         partisanCategory: partisanCategory,
-        joinPartisanDate:  `to_date('${joinPartisanDate}','yyyy-mm-dd')`,
+        joinPartisanDate: `to_date('${joinPartisanDate}','yyyy-mm-dd')`,
         affiliate: affiliate,
         CPCmemberSource: CPCmemberSource,
         partisanRemark: partisanRemark,
         religionCategory: reliefCategory,
-        believeDate:  `to_date('${believeDate}','yyyy-mm-dd')`,
+        believeDate: `to_date('${believeDate}','yyyy-mm-dd')`,
         activityVenue: activityVenue,
         disabilityCategory: disabilityCategory,
         disabilityLevel: disabilityLevel,
         disabilityReason: disabilityReason,
         disabilityId: disabilityId,
         destinationCountry: destinationCountry,
-        goAbroadDate:  `to_date('${goAbroadDate}','yyyy-mm-dd')`,
+        goAbroadDate: `to_date('${goAbroadDate}','yyyy-mm-dd')`,
         goAbroadCategory: goAbroadCategory,
-        rewardFormDate:  `to_date('${rewardFormDate}','yyyy-mm-dd')`,
-        licensingDate:  `to_date('${licensingDate}','yyyy-mm-dd')`,
+        rewardFormDate: `to_date('${rewardFormDate}','yyyy-mm-dd')`,
+        licensingDate: `to_date('${licensingDate}','yyyy-mm-dd')`,
         rewardCertId: rewardCertId,
         rewardReason: rewardReason,
-        rewardDate:  `to_date('${rewardDate}','yyyy-mm-dd')`,
+        rewardDate: `to_date('${rewardDate}','yyyy-mm-dd')`,
         rewardForm: rewardForm,
         rewardAmount: rewardAmount,
         accmulatedAmount: accmulatedAmount,
-        violationDate:  `to_date('${violationDate}','yyyy-mm-dd')`,
-        returnCertIdDate:  `to_date('${returnCertIdDate}','yyyy-mm-dd')`,
+        violationDate: `to_date('${violationDate}','yyyy-mm-dd')`,
+        returnCertIdDate: `to_date('${returnCertIdDate}','yyyy-mm-dd')`,
         returnAwardAmount: returnAwardAmount,
         accountNumber: accountNumber,
         levyAllowanceFormDate: levyAllowanceFormDate,
         levyReason: levyReason,
         allowanceAmount: allowanceAmount,
-        levyDate:  `to_date('${levyDate}','yyyy-mm-dd')`,
+        levyDate: `to_date('${levyDate}','yyyy-mm-dd')`,
         paymentForm: paymentForm,
         levyAmount: levyAmount,
         accmulatedCollection: accmulatedCollection,
-        endDate:  `to_date('${endDate}','yyyy-mm-dd')`,
+        endDate: `to_date('${endDate}','yyyy-mm-dd')`,
         handlePartyMember: handlePartyMember,
         handleCarde: handleCarde,
         levyProcedure: levyProcedure,
         lawEnforcementUnit: lawEnforcementUnit,
         enlistCategory: enlistCategory,
-        enlistDate:  `to_date('${enlistDate}','yyyy-mm-dd')`,
+        enlistDate: `to_date('${enlistDate}','yyyy-mm-dd')`,
         enlistPlace: enlistPlace,
         workPlaceBeforeEnlist: workPlaceBeforeEnlist,
         armyPost: armyPost,
-        leaveArmyDate:  `to_date('${leaveArmyDate}','yyyy-mm-dd')`,
+        leaveArmyDate: `to_date('${leaveArmyDate}','yyyy-mm-dd')`,
         resettlement: resettlement,
         leaveArmyReawrd: leaveArmyReawrd,
-        retireDate:  `to_date('${retireDate}','yyyy-mm-dd')`,
+        retireDate: `to_date('${retireDate}','yyyy-mm-dd')`,
         retireCategory: retireCategory,
         workPlaceBeforeRetire: workPlaceBeforeRetire,
         socialReliefId: socialReliefId,
@@ -81,13 +85,13 @@ export async function insert(body: any, db: any, sql: SQL): Promise<any> {
         fiveOldSpeciality: fiveOldSpeciality,
         charge: charge,
         rectificationCategory: rectificationCategory,
-        RCStartDate:  `to_date('${RCStartDate}','yyyy-mm-dd')`,
-        removeRCDate:  `to_date('${removeRCDate}','yyyy-mm-dd')`,
-        drugDate:  `to_date('${drugDate}','yyyy-mm-dd')`,
-        detoxificationDate:  `to_date('${detoxificationDate}','yyyy-mm-dd')`,
+        RCStartDate: `to_date('${RCStartDate}','yyyy-mm-dd')`,
+        removeRCDate: `to_date('${removeRCDate}','yyyy-mm-dd')`,
+        drugDate: `to_date('${drugDate}','yyyy-mm-dd')`,
+        detoxificationDate: `to_date('${detoxificationDate}','yyyy-mm-dd')`,
         drugCategory: drugCategory,
         detoxificationPlace: detoxificationPlace,
-        releaseDate:  `to_date('${releaseDate}','yyyy-mm-dd')`,
+        releaseDate: `to_date('${releaseDate}','yyyy-mm-dd')`,
         professionStatus: professionStatus,
         acceptProcessCategory: acceptProcessCategory,
         originalSin: originalSin,
@@ -95,7 +99,7 @@ export async function insert(body: any, db: any, sql: SQL): Promise<any> {
         disputeCategory: disputeCategory,
         investigationRemark: investigationRemark,
         laidOffCategory: laidOffCategory,
-        laidOffDate:  `to_date('${laidOffDate}','yyyy-mm-dd')`,
+        laidOffDate: `to_date('${laidOffDate}','yyyy-mm-dd')`,
         laidOffContactInfo: laidOffContactInfo,
         workPlaceBeforeLaidOff: workPlaceBeforeLaidOff,
         formerUnitProperty: formerUnitProperty,
@@ -103,10 +107,10 @@ export async function insert(body: any, db: any, sql: SQL): Promise<any> {
         economicTypeOfJob: economicTypeOfJob,
         workTypeSelection: workTypeSelection,
         salaryRequirements: salaryRequirements,
-        rhflzMoveInDate:  `to_date('${rhflzMoveInDate}','yyyy-mm-dd')`,
+        rhflzMoveInDate: `to_date('${rhflzMoveInDate}','yyyy-mm-dd')`,
         rhflzFormerAddress: rhflzFormerAddress,
         updateUsrId: updateUsrId,
-        updateTime:  `to_date('${createTime}','yyyy-mm-dd')`
+        updateTime: `to_date('${createTime}','yyyy-mm-dd')`
     }
     sqlstr = sql.insert('tb_populationdetailed', data);
     const result = db.edit(sqlstr);
@@ -161,6 +165,10 @@ export async function findOneInDatabase(tableName: string, primaryKeyName: strin
 //更新
 export async function update(body: any, sql: SQL, tableName: string, primaryKey: string, primaryKeyValue: string, db: any): Promise<any> {
     let sqlstr: string;
+    let { updateUsrId } = body;
+    if (updateUsrId == undefined) {
+        throw "Missing updateUsrId , check input";
+    }
     sqlstr = sql.update(tableName, body, primaryKey, primaryKeyValue);
     const result = await db.edit(sqlstr);
 }

@@ -13,13 +13,18 @@ export async function modifyUserRole(id: string, oldRoles: any, newRoles: any) {
 //登录
 export async function login(db: any, body: any): Promise<string> {
     body = decode(body.value);
-    console.log('body after decode :', body)
+    // console.log('body after decode :', body)
     body = JSON.parse(body);
-    console.log('body after parse : ',body);
+    // console.log('body after parse : ',body);
     let { username, mpassword } = body;
     const obj: any = await db.query(`SELECT * from tb_usr where usrname='${username}'`);
     let jsobj = JSON.parse(obj.result);
-    let password = String(jsobj[0].USRPASSWORD);
+    let password: string;
+    try {
+        password = String(jsobj[0].USRPASSWORD);
+    }catch (e){
+        throw "User not registered.Regsiter before u login.";
+    }
     if (password === mpassword) return encode(jsobj[0].USRID);
     else return "wrong password";
 
@@ -27,7 +32,7 @@ export async function login(db: any, body: any): Promise<string> {
 //注册
 export async function register(body: any, db: any): Promise<string> {
 
-    body = decode(body);
+    body = decode(body.value);
     body = JSON.parse(body);
     let { userName, userPassword } = body;
     let uuid = UUID.genUUID();

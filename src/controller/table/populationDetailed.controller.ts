@@ -13,12 +13,12 @@ export default class PopulationDetailedController {
         unless: true,
     })
     @required({
-        'body': ['idNumber', 'residenceId', 'name', 'updateUserId'],
+        'body': 'value'
     })
     @log
     async insert(ctx: Context, next: Function): Promise<void> {
         try {
-            let body = decode(ctx.request.body);
+            let body = decode(ctx.request.body.value);
             body = JSON.parse(body);
             let result = await insert(body, ctx.db, ctx.sql);
             ctx.success(result, 'success');
@@ -38,7 +38,7 @@ export default class PopulationDetailedController {
     async retrieve(ctx: Context, next: Function): Promise<any> {
         try {
             var result = await getWholeTable('tb_populationdetailed', ctx.db);
-            let fin = encode(result.result);
+            let fin = encode(JSON.stringify(result));
             ctx.success(fin, 'success');
         } catch (e) {
             console.error(e);
@@ -57,7 +57,8 @@ export default class PopulationDetailedController {
         try {
             let id = decode(ctx.params.id);
             var result = await findOneInDatabase('tb_populationdetailed', 'idNumber', id, ctx.db);
-            ctx.success(result, 'success');
+            let fin = encode(JSON.stringify(result));
+            ctx.success(fin, 'success');
         } catch (e) {
             console.error(e);
             ctx.error('error', e);
@@ -74,10 +75,11 @@ export default class PopulationDetailedController {
     @log
     async multiSelect(ctx: Context, next: Function): Promise<any> {
         try {
-            let body = decode(ctx.request.body);
+            let body = decode(ctx.request.body.value);
             body = JSON.parse(body);
             var result = await multiSelect('tb_populationdetailed', body, ctx.sql, ctx.db);
-            ctx.success(result, 'success');
+            let fin = encode(JSON.stringify(result));
+            ctx.success(fin, 'success');
         } catch (e) {
             console.error(e);
             ctx.error('error', e);
@@ -117,7 +119,7 @@ export default class PopulationDetailedController {
     async update(ctx: Context, next: Function): Promise<any> {
         try {
             let id = decode(ctx.params.id);
-            let body = decode(ctx.request.body);
+            let body = decode(ctx.request.body.value);
             body = JSON.parse(body);
             var result = await update(body, ctx.sql, 'tb_populationdetailed', 'idNumber', id, ctx.db);
             ctx.success(result, 'success');
