@@ -11,7 +11,7 @@ export async function insert(body: any, db: any, sql: SQL): Promise<any> {
     let createTime = Date.getDate();
     let { idNumber, residenceId, name, gender, ethnicity, birthday, educationalDegree,
         politicalStatus, maritalStatus, marriageCrisisDate, firstMarriageDate,
-        relationToHouseHolder, typeOfHouseHold, ancestralNativePlace, residentialNature,
+        relationToHouseholder, typeOfHousehold, ancestralNativePlace, residentialNature,
         residentialAddress, migrateDate, migrateType, liudongDate, liudongType, liudongReason,
         verificationDate, issueCertificateDate, certificateExpireDate, liudongCertificateId,
         dateOfDeath, speciality, anamnesis, pastMedicalHistory, workPlace, companyProperty,
@@ -19,7 +19,7 @@ export async function insert(body: any, db: any, sql: SQL): Promise<any> {
         updateUsrId
  } = body;
     if (idNumber == undefined || residenceId == undefined || name == undefined || updateUsrId == undefined
-        || gender == undefined || birthday == undefined || ethnicity == undefined || relationToHouseHolder == undefined) {
+        || gender == undefined || birthday == undefined || ethnicity == undefined || relationToHouseholder == undefined) {
         throw "required params are not all defined,check your input";
     }
     const data = {
@@ -34,8 +34,8 @@ export async function insert(body: any, db: any, sql: SQL): Promise<any> {
         maritalStatus: maritalStatus,
         marriageCrisisDate: `to_date('${marriageCrisisDate}','yyyy-mm-dd')`,
         firstMarriageDate: `to_date('${firstMarriageDate}','yyyy-mm-dd')`,
-        relationToHouseHolder: relationToHouseHolder,
-        typeOfHouseHold: typeOfHouseHold,
+        relationToHouseholder: relationToHouseholder,
+        typeOfHousehold: typeOfHousehold,
         ancestralNativePlace: ancestralNativePlace,
         residentialNature: residentialNature,
         residentialAddress: residentialAddress,

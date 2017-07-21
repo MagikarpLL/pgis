@@ -35,7 +35,7 @@ export async function register(body: any, db: any): Promise<string> {
     body = decode(body.value);
     body = JSON.parse(body);
     let { userName, userPassword } = body;
-    let uuid = UUID.genUUID();
+    let uuid = UUID.genUUID().substring(0,7);
     let createDate = Date.getDate();
     const result = await db.edit(`INSERT INTO tb_usr values ('${uuid}','${userName}','${userPassword}',to_date('${createDate}','yyyy-mm-dd')，'${uuid}')`);
     auth.addUserRoles(uuid, 'guest');
