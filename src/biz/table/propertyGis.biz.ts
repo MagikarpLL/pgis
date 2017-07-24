@@ -55,8 +55,7 @@ export async function getWholeTable(tableName: string, db: any): Promise<any> {
             throw new Error('DB not found!');
     }
     const result = await db.query(sql);
-    const jsObj = JSON.parse(result.result);
-    return jsObj;
+    return result;
 }
 
 //获取单条数据

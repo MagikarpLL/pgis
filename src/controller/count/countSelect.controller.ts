@@ -2,7 +2,8 @@ import * as Router from 'koa-router';
 import { Context } from '../../utils/koa.util';
 import { route, required, log, HttpMethod, DataType } from '../../addon/route';
 import { lineToHump } from '../../utils/split.util';
-import { building, unit,room } from "../../biz/countSelect.biz";
+import { building, unit, room } from "../../biz/countSelect.biz";
+import { encode, decode } from '../../utils/crypto.util';
 
 export default class CountSelectController {
 
@@ -13,59 +14,63 @@ export default class CountSelectController {
         unless: true,
     })
     @required({
-        'body': ['buildingId'],
+        'body': 'value'
     })
     @log
     async building(ctx: Context, next: Function): Promise<void> {
         try {
-            console.log(ctx.request.body);
-            let result = await building(ctx.request.body, ctx.db, ctx.sql);
-            console.log(result);
-            ctx.success(result, 'success');
+            let body = decode(ctx.request.body.value);
+            body = JSON.parse(body);
+            let result = await building(body, ctx.db, ctx.sql);
+            let fin = encode(JSON.stringify(result));
+            ctx.success(fin, 'success');
         } catch (e) {
             console.error(e);
             ctx.error('error', e);
         }
     }
 
-     //带参统计查询-----unit
+    //带参统计查询-----unit
     @route({
         path: '/unit',
         method: HttpMethod.POST,
         unless: true,
     })
     @required({
-        'body': ['buildingId','unit'],
+        'body': 'value'
     })
     @log
     async unit(ctx: Context, next: Function): Promise<void> {
         try {
-            console.log(ctx.request.body);
-            let result = await unit(ctx.request.body, ctx.db, ctx.sql);
-            console.log(result);
-            ctx.success(result, 'success');
+            let body = decode(ctx.request.body.value);
+            body = JSON.parse(body);
+            let result = await unit(body, ctx.db, ctx.sql);
+            let fin = encode(JSON.stringify(result));
+            ctx.success(fin, 'success');
         } catch (e) {
             console.error(e);
             ctx.error('error', e);
         }
     }
 
-         //带参统计查询-----room
+    //带参统计查询-----room
     @route({
         path: '/room',
         method: HttpMethod.POST,
         unless: true,
     })
     @required({
-        'body': ['buildingId','unit','room'],
+        'body': 'value'
     })
     @log
     async room(ctx: Context, next: Function): Promise<void> {
         try {
-            console.log(ctx.request.body);
-            let result = await room(ctx.request.body, ctx.db, ctx.sql);
-            console.log(result);
-            ctx.success(result, 'success');
+            let body = decode(ctx.request.body.value);
+            body = JSON.parse(body);
+            console.log(body);
+            let result = await room(body, ctx.db, ctx.sql);
+            let fin = encode(JSON.stringify(result));
+            ctx.success(fin, 'success');
         } catch (e) {
             console.error(e);
             ctx.error('error', e);
