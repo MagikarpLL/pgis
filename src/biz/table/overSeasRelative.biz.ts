@@ -23,7 +23,7 @@ export async function insert(body: any, db: any, sql: SQL): Promise<any> {
         name: name,
         gender: gender,
         ethnicity: ethnicity,
-        birthday: `to_date('${birthday}','yyyy-mm-dd')`,
+        birthday: birthday,
         educationalDegree: educationalDegree,
         politicalStatus: politicalStatus,
         maritalStatus: maritalStatus,
@@ -31,7 +31,7 @@ export async function insert(body: any, db: any, sql: SQL): Promise<any> {
         relationToHouseHolder: relationToHouseHolder,
         residentialAddress: residentialAddress,
         updateUsrId: updateUsrId,
-        updateTime: `to_date('${createTime}','yyyy-mm-dd')`,
+        updateTime: createTime,
     }
     sqlstr = sql.insert('tb_overSeasRelative', data);
     const result = db.edit(sqlstr);
@@ -87,7 +87,7 @@ export async function findOneInDatabase(tableName: string, primaryKeyName: strin
 export async function update(body: any, sql: SQL, tableName: string, primaryKey: string, primaryKeyValue: string, db: any): Promise<any> {
     let sqlstr: string;
     let { updateUsrId } = body;
-    if(updateUsrId==undefined){
+    if (updateUsrId == undefined) {
         throw "Missing updateUsrId , check input";
     }
     sqlstr = sql.update(tableName, body, primaryKey, primaryKeyValue);

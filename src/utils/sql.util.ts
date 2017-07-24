@@ -115,13 +115,14 @@ export class SQL {
         const values: string[] = [];
         for (const field of Object.keys(fields)) {
             if (fields[field] === undefined) { continue };
-            if (fields[field].indexOf('to_date')==0) {
+            if (field.indexOf('Date') != -1 || field.indexOf('day') != -1 ||
+             field.indexOf('date') != -1 || field.indexOf('Day') != -1 || field.indexOf('Time')!=-1) {
                 fds.push(field);
-                values.push(`${fields[field]}`)
+                values.push(`to_date('${fields[field]}','yyyy-mm-dd')`);
             }
             else {
                 fds.push(field);
-                values.push(`'${fields[field]}'`)
+                values.push(`'${fields[field]}'`);
             }
         }
         return `INSERT INTO ${name}(${fds.join(',')}) VALUES (${values.join(',')})`;
