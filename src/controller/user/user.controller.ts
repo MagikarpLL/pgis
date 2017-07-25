@@ -1,6 +1,6 @@
 import * as Router from 'koa-router';
 import { Context } from '../../utils/koa.util';
-import { login, register, verify, addUserRoles, removeUserRoles, getWholeTable, findOneInDatabase, modifyUserRole } from '../../biz/user.biz';
+import { login, register, verify, addUserRoles, removeUserRoles, getAllUsers, findOneInDatabase, modifyUserRole } from '../../biz/user.biz';
 import { route, required, log, HttpMethod, DataType } from '../../addon/route';
 
 /**
@@ -36,7 +36,7 @@ export default class UserController {
         unless: true,
     })
     @required({
-        'body':'value'
+        'body': 'value'
     })
     @log
     async register(ctx: Context, next: Function): Promise<void> {
@@ -133,5 +133,22 @@ export default class UserController {
             ctx.error('error', e);
         }
     }
+
+    @route({
+        path: '',
+        method: HttpMethod.GET,
+        unless: true,
+    })
+    @log
+    async getAllUsers(ctx: Context, next: Function): Promise<any> {
+        try {
+            let result = await getAllUsers('tb_usr', ctx.db);
+            ctx.success(result, 'success');
+        } catch (e) {
+            console.error(e);
+            ctx.error('error', e);
+        }
+    }
+
 
 }

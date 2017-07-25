@@ -22,7 +22,7 @@ export async function login(db: any, body: any): Promise<string> {
     let password: string;
     try {
         password = String(jsobj[0].USRPASSWORD);
-    }catch (e){
+    } catch (e) {
         throw "User not registered.Regsiter before u login.";
     }
     if (password === mpassword) return encode(jsobj[0].USRID);
@@ -35,7 +35,7 @@ export async function register(body: any, db: any): Promise<string> {
     body = decode(body.value);
     body = JSON.parse(body);
     let { userName, userPassword } = body;
-    let uuid = UUID.genUUID().substring(0,7);
+    let uuid = UUID.genUUID().substring(0, 7);
     let createDate = Date.getDate();
     const result = await db.edit(`INSERT INTO tb_usr values ('${uuid}','${userName}','${userPassword}',to_date('${createDate}','yyyy-mm-dd')，'${uuid}')`);
     auth.addUserRoles(uuid, 'guest');
@@ -56,18 +56,9 @@ export async function removeUserRoles(id: string, roles: any) {
 }
 
 //获取整表
-export async function getWholeTable(tableName: string, db: any): Promise<any> {
+export async function getAllUsers(tableName: string, db: any): Promise<any> {
     let sql: string;
-    switch (db.dbType) {
-        case DBType.MYSQL:
-            sql = `SELECT * FROM ${tableName}`;
-            break;
-        case DBType.ORACLE:
-            sql = `SELECT * FROM ${tableName}`;
-            break;
-        default:
-            throw new Error('DB not found!');
-    }
+    sql = `SELECT usrname,usrid FROM ${tableName}`;
     const result = await db.query(sql);
     const jsObj = JSON.parse(result.result);
     return jsObj;
