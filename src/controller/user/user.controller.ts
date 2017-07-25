@@ -1,6 +1,6 @@
 import * as Router from 'koa-router';
 import { Context } from '../../utils/koa.util';
-import { login, register, verify, addUserRoles, removeUserRoles, getAllUsers, findOneInDatabase, modifyUserRole } from '../../biz/user.biz';
+import { login, register, verify, addUserRoles, removeUserRoles, getAllUsers, findOneInDatabase, modifyUserRole, update } from '../../biz/user.biz';
 import { route, required, log, HttpMethod, DataType } from '../../addon/route';
 
 /**
@@ -149,6 +149,27 @@ export default class UserController {
             ctx.error('error', e);
         }
     }
+
+    //改
+    @route({
+        path: '/:id',
+        method: HttpMethod.PATCH,
+        unless: true,
+    })
+    @log
+    async update(ctx: Context, next: Function): Promise<any> {
+        try {
+            // let id = decode(ctx.params.id);
+            // let body = decode(ctx.request.body.value);
+            //body = JSON.parse(body);
+            var result = await update(ctx.request.body, ctx.sql, 'tb_usr', 'usrId', ctx.params.id, ctx.db);
+            ctx.success(result, 'success');
+        } catch (e) {
+            console.error(e);
+            ctx.error('error', e);
+        }
+    }
+
 
 
 }

@@ -3,7 +3,7 @@ import { Context } from '../utils/koa.util';
 import { route, required, log, HttpMethod, DataType } from '../addon/route';
 import {
     getRoleUsers, getUserRoles, allow, allowedPermissions,
-    removeAllow, hasRole, removeResource, removeRole
+    removeAllow, hasRole, removeResource, removeRole, getAllRoles
 } from '../utils/auth.util'
 /**
  * 路由加载规则
@@ -167,6 +167,23 @@ export default class AuthController {
             let { roleName } = ctx.request.body;
             const obj = await hasRole(ctx.params.id, roleName);
             ctx.success({ status: obj }, 'success');
+        } catch (e) {
+            console.error(e);
+            ctx.error('error', e);
+        }
+    }
+
+    @route({
+        path: '/getRoles',
+        method: HttpMethod.GET,
+        unless: true,
+    })
+    @log
+    async getAllRoles(ctx: Context, next: Function): Promise<void> {
+        try {
+            //let { roleName } = ctx.request.body;
+            const obj = await getAllRoles();
+            ctx.success(obj, 'success');
         } catch (e) {
             console.error(e);
             ctx.error('error', e);

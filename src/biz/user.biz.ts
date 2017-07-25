@@ -72,4 +72,13 @@ export async function findOneInDatabase(tableName: string, primaryKeyName: strin
     const jsObj = JSON.parse(result.result);
     return jsObj[0];
 }
-
+//更新
+export async function update(body: any, sql: SQL, tableName: string, primaryKey: string, primaryKeyValue: string, db: any): Promise<any> {
+    let sqlstr: string;
+    let { updateUsrId } = body;
+    if (updateUsrId == undefined) {
+        throw "Missing updateUsrId , check input";
+    }
+    sqlstr = sql.update(tableName, body, primaryKey, primaryKeyValue);
+    const result = await db.edit(sqlstr);
+}

@@ -37,5 +37,8 @@ export async function removeAllow(role: any, resources: any, permissions: any) {
 export async function allowedPermissions(id: string, resources: any) {
     return auth.allowedPermissions(id, resources);
 }
+export async function getAllRoles() {
+    return redis.smembers('acl_meta@roles');
+}
 
 
