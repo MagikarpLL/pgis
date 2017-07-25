@@ -5,17 +5,17 @@ import { SQL } from '../../utils/sql.util';
 import OBJECT from '../../utils/object.util';
 
 
-//tb_overSeasRelative
+//tb_overseasRelative
 //insert
 
 export async function insert(body: any, db: any, sql: SQL): Promise<any> {
     let sqlstr: string;
     let createTime = Date.getDate();
     let { residenceId, name, gender, ethnicity, birthday, educationalDegree, politicalStatus, maritalStatus, contactInfo,
-        relationToHouseHolder, residentialAddress, updateUsrId
+        relationToHouseholder, residentialAddress, updateUsrId
  } = body;
     if (gender == undefined || residenceId == undefined || name == undefined || ethnicity == undefined ||
-        relationToHouseHolder == undefined || updateUsrId == undefined) {
+        relationToHouseholder == undefined || updateUsrId == undefined) {
         throw "required params are not all defined,check your input";
     }
     const data = {
@@ -28,7 +28,7 @@ export async function insert(body: any, db: any, sql: SQL): Promise<any> {
         politicalStatus: politicalStatus,
         maritalStatus: maritalStatus,
         contactInfo: contactInfo,
-        relationToHouseHolder: relationToHouseHolder,
+        relationToHouseholder: relationToHouseholder,
         residentialAddress: residentialAddress,
         updateUsrId: updateUsrId,
         updateTime: createTime,

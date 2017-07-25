@@ -14,7 +14,7 @@ export async function insert(body: any, db: any, sql: SQL): Promise<any> {
         relationToHouseholder, typeOfHousehold, ancestralNativePlace, residentialNature,
         residentialAddress, migrateDate, migrateType, liudongDate, liudongType, liudongReason,
         verificationDate, issueCertificateDate, certificateExpireDate, liudongCertificateId,
-        dateOfDeath, speciality, anamnesis, pastMedicalHistory, workPlace, companyProperty,
+        deathDate, speciality, anamnesis, pets, workPlace, companyProperty,
         socialSecurity, pensionCategory, personNelCategory, peopleliveHoodCategory,
         updateUsrId
  } = body;
@@ -48,10 +48,10 @@ export async function insert(body: any, db: any, sql: SQL): Promise<any> {
         issueCertificateDate: issueCertificateDate,
         certificateExpireDate: certificateExpireDate,
         liudongCertificateId: liudongCertificateId,
-        dateOfDeath: dateOfDeath,
+        deathDate: deathDate,
         speciality: speciality,
         anamnesis: anamnesis,
-        pastMedicalHistory: pastMedicalHistory,
+        pets: pets,
         workPlace: workPlace,
         companyProperty: companyProperty,
         socialSecurity: socialSecurity,

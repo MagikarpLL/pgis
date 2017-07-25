@@ -4,8 +4,8 @@ import { insert, remove, findOneInDatabase, getWholeTable, update, multiSelect }
 import { route, required, log, HttpMethod, DataType } from '../../addon/route';
 import { encode, decode } from '../../utils/crypto.util';
 
-//tb_overSeasRelative
-export default class OverSeasRelativeController {
+//tb_overseasRelative
+export default class OverseasRelativeController {
 
     //增
     @route({

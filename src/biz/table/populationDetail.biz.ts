@@ -9,7 +9,7 @@ import OBJECT from '../../utils/object.util'
 
 export async function insert(body: any, db: any, sql: SQL): Promise<any> {
     let sqlstr: string;
-    let createTime = Date.getDateTime();
+    let createTime = Date.getDate();
     let { idNumber, residenceId, name, partisanCategory, joinPartisanDate, affiliate, CPCmemberSource, partisanRemark, religionCategory,
         believeDate, activityVenue, disabilityCategory, disabilityLevel, disabilityReason, disabilityId, destinationCountry, goAbroadDate, goAbroadCategory,
         rewardFormDate, licensingDate, rewardCertId, rewardReason, rewardDate, rewardForm, rewardAmount, accmulatedAmount, violationDate, returnCertIdDate,

@@ -25,9 +25,9 @@ export async function building(body: any, db: any, sql: SQL): Promise<any> {
                 '未婚'  
              END) 未婚,
        COUNT(CASE  
-               WHEN popu.educationaldegree  IN ('大学生') THEN  
-                '大学生'  
-             END) 大学生,
+               WHEN popu.educationaldegree  IN ('大学') THEN  
+                '大学'  
+             END) 大学,
        COUNT(CASE  
                WHEN popu.educationaldegree  IN ('高中') THEN  
                 '高中'  
@@ -113,9 +113,9 @@ export async function unit(body: any, db: any, sql: SQL): Promise<any> {
                 '未婚'  
              END) 未婚,
        COUNT(CASE  
-               WHEN popu.educationaldegree  IN ('大学生') THEN  
-                '大学生'  
-             END) 大学生,
+               WHEN popu.educationaldegree  IN ('大学') THEN  
+                '大学'  
+             END) 大学,
        COUNT(CASE  
                WHEN popu.educationaldegree  IN ('高中') THEN  
                 '高中'  
