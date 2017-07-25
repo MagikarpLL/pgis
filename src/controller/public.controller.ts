@@ -34,14 +34,17 @@ export default class AuthController {
 
 
     @route({
-        path: '/getUserRoles/:id',
+        path: '/getUserRoles',
         method: HttpMethod.GET,
         unless: true,
+    })
+    @required({
+        'query': 'id',
     })
     @log
     async getUserRoles(ctx: Context, next: Function): Promise<void> {
         try {
-            const obj = await getUserRoles(ctx.params.id);
+            const obj = await getUserRoles(ctx.query.id);
             ctx.success({ roles: obj }, 'success');
         } catch (e) {
             console.error(e);
