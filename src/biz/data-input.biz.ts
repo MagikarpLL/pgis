@@ -11,7 +11,8 @@ const grpcServer = new Grpc('InputData.proto', 'InputDataPackage');
 export async function residence(body: any, db: any, sql: SQL): Promise<any> {
     grpcServer.init('InputDataService');
     let sqlExec = "";
-    let residenceData = body.residence;
+    let residenceData = body;
+    console.log(residenceData);
     for (let i in residenceData) {
         sqlExec = sqlExec + sql.insert("TB_RESIDENCE", residenceData[i]) + ";";
     }

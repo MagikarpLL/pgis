@@ -115,8 +115,9 @@ export class SQL {
         const values: string[] = [];
         for (const field of Object.keys(fields)) {
             if (fields[field] === undefined) { continue };
+            if (field.indexOf('baseObjId') != -1) { continue };
             if (field.indexOf('Date') != -1 || field.indexOf('day') != -1 ||
-                 field.indexOf('Day') != -1 || field.indexOf('Time')!=-1) {
+                field.indexOf('Day') != -1 || field.indexOf('Time') != -1) {
                 fds.push(field);
                 values.push(`to_date('${fields[field]}','yyyy-mm-dd')`);
             }
