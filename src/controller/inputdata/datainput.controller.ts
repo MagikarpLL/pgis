@@ -36,8 +36,9 @@ export default class DatainputController {
     @log
     async populationDetailed(ctx: Context, next: Function): Promise<void> {
         try {
-            console.log(ctx.request.body);
-            let result = await populationDetailed(ctx.request.body, ctx.db, ctx.sql);
+            let body = decode(ctx.request.body.value);
+            body = JSON.parse(body);
+            let result = await populationDetailed(body, ctx.db, ctx.sql);
             console.log(result);
             ctx.success(result, 'success');
         } catch (e) {
@@ -55,8 +56,9 @@ export default class DatainputController {
     @log
     async population(ctx: Context, next: Function): Promise<void> {
         try {
-            console.log(ctx.request.body);
-            let result = await population(ctx.request.body, ctx.db, ctx.sql);
+            let body = decode(ctx.request.body.value);
+            body = JSON.parse(body);
+            let result = await population(body, ctx.db, ctx.sql);
             console.log(result);
             ctx.success(result, 'success');
         } catch (e) {
@@ -67,15 +69,16 @@ export default class DatainputController {
 
     //数据上传-----海外亲属表
     @route({
-        path: '/overSeaRelative',
+        path: '/overseaRelative',
         method: HttpMethod.POST,
         unless: true,
     })
     @log
-    async overSeaRelative(ctx: Context, next: Function): Promise<void> {
+    async overseaRelative(ctx: Context, next: Function): Promise<void> {
         try {
-            console.log(ctx.request.body);
-            let result = await overSeaRelative(ctx.request.body, ctx.db, ctx.sql);
+            let body = decode(ctx.request.body.value);
+            body = JSON.parse(body);
+            let result = await overSeaRelative(body, ctx.db, ctx.sql);
             console.log(result);
             ctx.success(result, 'success');
         } catch (e) {

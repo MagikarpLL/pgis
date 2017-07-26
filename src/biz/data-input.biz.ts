@@ -24,7 +24,7 @@ export async function residence(body: any, db: any, sql: SQL): Promise<any> {
 export async function populationDetailed(body: any, db: any, sql: SQL): Promise<any> {
     grpcServer.init('InputDataService');
     let sqlExec = "";
-    let populationDetailed = body.populationDetailed;
+    let populationDetailed = body;
     for (let i in populationDetailed) {
         sqlExec = sqlExec + sql.insert("TB_POPULATIONDETAILED", populationDetailed[i]) + ";";
     }
@@ -36,7 +36,7 @@ export async function populationDetailed(body: any, db: any, sql: SQL): Promise<
 export async function population(body: any, db: any, sql: SQL): Promise<any> {
     grpcServer.init('InputDataService');
     let sqlExec = "";
-    let population = body.population;
+    let population = body;
     for (let i in population) {
         sqlExec = sqlExec + sql.insert("TB_POPULATION", population[i]) + ";";
     }
@@ -48,7 +48,7 @@ export async function population(body: any, db: any, sql: SQL): Promise<any> {
 export async function overSeaRelative(body: any, db: any, sql: SQL): Promise<any> {
     grpcServer.init('InputDataService');
     let sqlExec = "";
-    let overSeaRelative = body.overSeaRelative;
+    let overSeaRelative = body;
     for (let i in overSeaRelative) {
         sqlExec = sqlExec + sql.insert("TB_OVERSEASRELATIVE", overSeaRelative[i]) + ";";
     }
