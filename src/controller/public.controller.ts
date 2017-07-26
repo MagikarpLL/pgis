@@ -136,18 +136,18 @@ export default class AuthController {
 
 
     @route({
-        path: '/allowedPermissions/:id',
+        path: '/allowedPermissions',
         method: HttpMethod.GET,
         unless: true,
     })
     @required({
-        'query': ['resources'],
+        'query': ['resources', 'id'],
     })
     @log
     async allowedPermissions(ctx: Context, next: Function): Promise<void> {
         try {
-            let { resources } = ctx.request.query;
-            const obj = await allowedPermissions(ctx.params.id, resources);
+            let { resources, id } = ctx.request.query;
+            const obj = await allowedPermissions(id, resources);
             ctx.success({ permissions: obj }, 'success');
         } catch (e) {
             console.error(e);
@@ -157,18 +157,18 @@ export default class AuthController {
 
 
     @route({
-        path: '/hasRole/:id',
+        path: '/hasRole',
         method: HttpMethod.POST,
         unless: true,
     })
     @required({
-        'body': ['roleName'],
+        'body': ['roleName', 'id'],
     })
     @log
     async hasRole(ctx: Context, next: Function): Promise<void> {
         try {
-            let { roleName } = ctx.request.body;
-            const obj = await hasRole(ctx.params.id, roleName);
+            let { roleName, id } = ctx.request.body;
+            const obj = await hasRole(id, roleName);
             ctx.success({ status: obj }, 'success');
         } catch (e) {
             console.error(e);
