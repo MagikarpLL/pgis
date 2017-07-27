@@ -12,10 +12,8 @@ export async function modifyUserRole(id: string, oldRoles: any, newRoles: any) {
 }
 //登录
 export async function login(db: any, body: any): Promise<string> {
-    body = decode(body.value);
-    // console.log('body after decode :', body)
-    body = JSON.parse(body);
-    // console.log('body after parse : ',body);
+    body = decode(body.value); 
+    body = JSON.parse(body);  
     let { username, mpassword } = body;
     const obj: any = await db.query(`SELECT * from tb_usr where usrname='${username}'`);
     let jsobj = JSON.parse(obj.result);
@@ -42,17 +40,23 @@ export async function register(body: any, db: any): Promise<string> {
     return result;
 }
 //验证
-export async function verify(id: string, resoucres: any, perimissions: any) {
-    return auth.isAllowed(id, resoucres, perimissions);
+export async function verify(id: string, resoucres: any) {
+    let result = [];
+    //console.log(await auth.isAllowed(id, resoucres, ['insert', 'delete', 'update']));
+    result.push(await auth.isAllowed(id, resoucres, 'insert'));
+    result.push(await auth.isAllowed(id, resoucres, 'delete'));
+    result.push(await auth.isAllowed(id, resoucres, 'update'));
+    result.push(await auth.isAllowed(id, '*', '*'));
+    return result;
 }
 
 //添加用户角色
 export async function addUserRoles(id: string, roles: any) {
-    auth.addUserRoles(id, roles);
+    await auth.addUserRoles(id, roles);
 }
 //删除用户角色
 export async function removeUserRoles(id: string, roles: any) {
-    auth.removeUserRoles(id, roles);
+    await auth.removeUserRoles(id, roles);
 }
 
 //获取整表
@@ -81,4 +85,10 @@ export async function update(body: any, sql: SQL, tableName: string, primaryKey:
     }
     sqlstr = sql.update(tableName, body, primaryKey, primaryKeyValue);
     const result = await db.edit(sqlstr);
+}
+//删除
+export async function remove(db: any, primaryKey: string, sql: SQL): Promise<any> {
+    let sqlstr = sql.delete('tb_usr', 'usrId', decode(primaryKey));
+    const result = await db.edit(sqlstr);
+    return result;
 }

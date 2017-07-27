@@ -132,8 +132,13 @@ export class SQL {
     update(name: string, fields: Fields, id: string, value: string): string {
         let sqlstring = `UPDATE ${name} ta SET `;
         for (const field of Object.keys(fields)) {
-            if (fields[field] === undefined) { continue }
-            sqlstring += `ta.${field}='${fields[field]}',`;
+            if (fields[field] === undefined) { continue };
+            if (field.indexOf('baseObjId') != -1) { continue };
+            if (field.indexOf('Date') != -1 || field.indexOf('day') != -1 ||
+                field.indexOf('Day') != -1 || field.indexOf('Time') != -1) {
+                sqlstring += `ta.${field}=to_date('${fields[field]}','yyyy-mm-dd'),`;
+            }
+            else sqlstring += `ta.${field}='${fields[field]}',`;
         }
         sqlstring = sqlstring.substring(0, sqlstring.length - 1);
         sqlstring += ` WHERE ta.${id}='${value}'`;

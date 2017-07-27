@@ -111,9 +111,7 @@ export default class ResidenceController {
         method: HttpMethod.PATCH,
         unless: true,
     })
-    @required({
-        'body': ['updateUsrId'],
-    })
+  
     @log
     async update(ctx: Context, next: Function): Promise<any> {
         try {

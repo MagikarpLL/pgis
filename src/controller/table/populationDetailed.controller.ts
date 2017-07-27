@@ -112,9 +112,7 @@ export default class PopulationDetailedController {
         method: HttpMethod.PATCH,
         unless: true,
     })
-    @required({
-        'body': ['updateUserId'],
-    })
+ 
     @log
     async update(ctx: Context, next: Function): Promise<any> {
         try {

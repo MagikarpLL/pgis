@@ -4,7 +4,8 @@ import { route, required, log, HttpMethod, DataType } from '../addon/route';
 import {
     getRoleUsers, getUserRoles, allow, allowedPermissions,
     removeAllow, hasRole, removeResource, removeRole, getAllRoles
-} from '../utils/auth.util'
+} from '../utils/auth.util';
+
 /**
  * 路由加载规则
  * 文件命名必须以.controller.ts结尾
@@ -59,13 +60,14 @@ export default class AuthController {
         unless: true,
     })
     @required({
-        'body': ['roles', 'resources', 'perimissions'],
+        'body': ['roles', 'resources', 'permissions'],
     })
     @log
     async allow(ctx: Context, next: Function): Promise<void> {
         try {
-            let { roles, resources, perimissions } = ctx.request.body;
-            const obj = await allow(roles, resources, perimissions);
+            let { roles, resources, permissions } = ctx.request.body;
+            console.log(roles,resources,permissions);
+            const obj = await allow(roles, resources, permissions);
             ctx.success({ status: obj }, 'success');
         } catch (e) {
             console.error(e);
