@@ -63,7 +63,7 @@ export default class UserController {
         try {
             let { resources } = ctx.request.body;
             let result = await verify(ctx.params.id, resources);
-            ctx.success(result, 'success');
+            ctx.success(encode(JSON.stringify(result)), 'success');
         } catch (e) {
             console.error(e);
             ctx.error('error', e);

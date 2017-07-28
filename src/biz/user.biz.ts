@@ -42,6 +42,7 @@ export async function register(body: any, db: any): Promise<string> {
 //验证
 export async function verify(id: string, resoucres: any) {
     let result = [];
+    id = decode(id);
     //console.log(await auth.isAllowed(id, resoucres, ['insert', 'delete', 'update']));
     result.push(await auth.isAllowed(id, resoucres, 'insert'));
     result.push(await auth.isAllowed(id, resoucres, 'delete'));
